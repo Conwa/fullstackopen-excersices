@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
-import List from "./components/List";
+import Filter from "./components/Filter";
 
 const App = () => {
   const [countries, setCountries] = useState([]);
@@ -29,7 +29,7 @@ const App = () => {
       <form>
         Search Countries:<input onChange={handleSearch}></input>
       </form>
-      <List countries={countries} matches={matches} />
+      <Filter countries={countries} matches={matches} />
     </>
   );
 };
