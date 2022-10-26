@@ -1,10 +1,13 @@
-import React, { useState } from "react";
+import React, { useState, s } from "react";
 import Country from "./Country";
 import List from "./List";
 
 const Filter = (props) => {
-  const [selected, setSelected] = useState([]);
-  const [toggle, setToggle] = useState(false);
+  const [selected, setSelected] = useState({
+    key: "",
+    state: false,
+  });
+  const [toggle, setToggle] = useState({ index: "", state: false });
 
   if (Object.entries(props.matches).length > 10) {
     return <p>Too many results, be more specific</p>;
@@ -19,14 +22,19 @@ const Filter = (props) => {
         <>
           <List key={key} country={currenCountry} />
           <button
+            key={key}
             onClick={() => {
-              setSelected([currenCountry]);
-              console.log(selected);
-              setToggle(!toggle);
+              setToggle({ index: props.matches });
+              console.log(toggle);
             }}
           >
             Show Info
           </button>
+          {toggle && (
+            <>
+              <p>hola mundo</p>
+            </>
+          )}
         </>
       );
     });
