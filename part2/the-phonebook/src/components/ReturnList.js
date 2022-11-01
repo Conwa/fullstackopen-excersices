@@ -4,10 +4,6 @@ import Person from "./Person";
 COULDN´T MAKE IT WORK WHEN NEEDING TO ELIMINATE CONTACTS */
 
 const ReturnList = ({ match, persons, setPersons }) => {
-  const deleteContactFunction = (id) => {
-    console.log(id);
-  };
-
   if (
     Object.keys(match).length === 0 &&
     (match.constructor === Array || match.constructor === Object)

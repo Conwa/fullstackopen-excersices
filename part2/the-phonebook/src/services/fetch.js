@@ -6,6 +6,17 @@ const getAll = () => {
   return request.then((response) => response.data);
 };
 
+const getMatch = (name) => {
+  const request = axios.get(`${baseUrl}`);
+  return request.then((response) => {
+    const match = response.data.filter((el) => {
+      return el.name.toLowerCase() === name.toLowerCase();
+    });
+    console.log(match);
+    return match;
+  });
+};
+
 const createContact = (newObject) => {
   const request = axios.post(baseUrl, newObject);
   return request.then((response) => response.data);
@@ -22,6 +33,7 @@ const deleteContact = (id) => {
 
 export default {
   getAll: getAll,
+  getMatch: getMatch,
   createContact: createContact,
   deleteContact: deleteContact,
 };

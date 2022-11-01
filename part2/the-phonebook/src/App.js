@@ -25,14 +25,21 @@ const App = () => {
       number: newNumber,
     };
 
-    fetch.createContact(newPerson);
+    const message = `Add ${newName}?`;
+
+    /*ACA ESTAS, TENES QUE HACER QUE SI HAY UN MATCH LE VAS A HACER UN PUT AL
+    JSON, Y SI NO LE VAS A HACER UN POST, EL GETMATCH FUNCIONA OKEY,
+    REVISAR EL TEMA DEL ALERT DE ABAJO */
+    if (window.confirm(message)) {
+      fetch.createContact(newPerson);
+      fetch.getMatch(newPerson.name);
+    }
 
     const aMatch = persons.some((person) => {
       return person.name.toLowerCase() === newPerson.name.toLowerCase();
     });
 
     if (!aMatch) {
-      console.log("todo ok");
       return setPersons(persons.concat(newPerson));
     }
     return alert(`${newPerson.name} is already added to phonebook`);
