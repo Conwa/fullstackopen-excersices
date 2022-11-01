@@ -1,5 +1,4 @@
 import { useState, useEffect } from "react";
-import axios from "axios";
 import AddContact from "./components/AddContact";
 import Filter from "./components/Filter";
 import ReturnList from "./components/ReturnList";
@@ -10,6 +9,10 @@ const App = () => {
   const [newName, setNewName] = useState("");
   const [newNumber, setNewNumber] = useState("");
   const [match, newMatch] = useState([]);
+
+  useEffect(() => {
+    fetch.getAll().then((data) => setPersons(data));
+  }, []);
 
   function handleNameChange(event) {
     setNewName(event.target.value);
@@ -27,22 +30,24 @@ const App = () => {
 
     const message = `Add ${newName}?`;
 
-    /*ACA ESTAS, TENES QUE HACER QUE SI HAY UN MATCH LE VAS A HACER UN PUT AL
-    JSON, Y SI NO LE VAS A HACER UN POST, EL GETMATCH FUNCIONA OKEY,
-    REVISAR EL TEMA DEL ALERT DE ABAJO */
     if (window.confirm(message)) {
-      fetch.createContact(newPerson);
-      fetch.getMatch(newPerson.name);
+      const match = fetch.getMatch(newPerson.name);
+      match.then((response) => {
+        console.log(response);
+        if (response) {
+          const message = `${newPerson.name} is already added to phonebook, replace the old number with a new one?`;
+          if (window.confirm(message)) {
+            fetch.updateContact(newPerson.name, newPerson);
+            fetch.getAll().then((response) => setPersons(response));
+          } else {
+            return alert(`${newPerson.name} is already added to phonebook`);
+          }
+        } else {
+          fetch.createContact(newPerson);
+          console.log("new contact created");
+        }
+      });
     }
-
-    const aMatch = persons.some((person) => {
-      return person.name.toLowerCase() === newPerson.name.toLowerCase();
-    });
-
-    if (!aMatch) {
-      return setPersons(persons.concat(newPerson));
-    }
-    return alert(`${newPerson.name} is already added to phonebook`);
   };
 
   function handlePersonSearch(event) {
@@ -58,10 +63,6 @@ const App = () => {
     }
     return newMatch(matches);
   }
-
-  useEffect(() => {
-    fetch.getAll().then((response) => setPersons(response));
-  }, []);
 
   return (
     <div>
