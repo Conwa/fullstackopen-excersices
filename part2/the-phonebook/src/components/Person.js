@@ -1,11 +1,25 @@
-import React from "react";
+import fetch from "../services/fetch";
 
-const Person = (props) => {
+import { useEffect } from "react";
+
+const Person = ({ id, name, number, setPersons }) => {
+  const handleDelete = () => {
+    const message = `Delete ${name}?`;
+    console.log(message);
+    if (window.confirm(message)) {
+      fetch.deleteContact(id);
+      fetch.getAll().then((data) => setPersons(data));
+    }
+  };
+
   return (
     <>
-      name: <input name={props.newName} onChange={props.handleNameChange} />
-      number:{" "}
-      <input name={props.newNumber} onChange={props.handleNumberChange} />
+      <p key={id}>
+        {name} {number}
+        <>
+          <button onClick={handleDelete}>Delete Contact</button>
+        </>
+      </p>
     </>
   );
 };

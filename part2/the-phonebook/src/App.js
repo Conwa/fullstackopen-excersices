@@ -1,31 +1,9 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
-import Person from "./components/Person";
+import AddContact from "./components/AddContact";
 import Filter from "./components/Filter";
-
-const ReturnList = (props) => {
-  if (
-    Object.keys(props.match).length === 0 &&
-    (props.match.constructor === Array || props.match.constructor === Object)
-  ) {
-    console.log(props);
-    return props.persons.map((person) => {
-      return (
-        <p key={person.id}>
-          {person.name} {person.number}
-        </p>
-      );
-    });
-  } else if (props.match.length >= 1) {
-    return props.match.map((match) => {
-      return (
-        <p key={match.id}>
-          {match.name} {match.number}
-        </p>
-      );
-    });
-  }
-};
+import ReturnList from "./components/ReturnList";
+import fetch from "./services/fetch";
 
 const App = () => {
   const [persons, setPersons] = useState([]);
@@ -42,12 +20,12 @@ const App = () => {
 
   const submitPerson = (event) => {
     event.preventDefault();
-
     const newPerson = {
       name: newName,
       number: newNumber,
-      id: persons.length + 1,
     };
+
+    fetch.createContact(newPerson);
 
     const aMatch = persons.some((person) => {
       return person.name.toLowerCase() === newPerson.name.toLowerCase();
@@ -63,7 +41,7 @@ const App = () => {
   function handlePersonSearch(event) {
     let search = event.target.value;
     search = search.toLowerCase();
-    console.log(search.toLowerCase());
+    // console.log(search.toLowerCase());
 
     let matches = {};
     for (let i = 0; i < search.length; i++) {
@@ -75,12 +53,7 @@ const App = () => {
   }
 
   useEffect(() => {
-    axios.get("http://localhost:3001/persons").then((response) => {
-      console.log("promise fulfilled");
-      const data = response.data;
-      setPersons(data);
-      console.log(data);
-    });
+    fetch.getAll().then((response) => setPersons(response));
   }, []);
 
   return (
@@ -90,7 +63,7 @@ const App = () => {
       <form onSubmit={submitPerson}>
         <h2>Add new contact:</h2>
         <div>
-          <Person
+          <AddContact
             name={newName}
             number={newNumber}
             handleNameChange={handleNameChange}
@@ -100,7 +73,12 @@ const App = () => {
         <button type="submit">Add Contact</button>
       </form>
       <h2>List: </h2>
-      <ReturnList persons={persons} match={match} />
+      <ReturnList
+        persons={persons}
+        match={match}
+        setPersons={setPersons}
+        newMatch={newMatch}
+      />
     </div>
   );
 };

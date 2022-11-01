@@ -10,6 +10,6 @@ ReactDOM.createRoot(document.getElementById("root")).render(<App />);
 //   const persons = response.data;
 
 //   ReactDOM.createRoot(document.getElementById("root")).render(
-//     <App />
+//     <App persons={persons} />
 //   );
 // });
