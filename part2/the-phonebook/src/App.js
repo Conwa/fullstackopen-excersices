@@ -3,16 +3,19 @@ import AddContact from "./components/AddContact";
 import Filter from "./components/Filter";
 import ReturnList from "./components/ReturnList";
 import fetch from "./services/fetch";
+import Notification from "./components/Notification";
 
 const App = () => {
   const [persons, setPersons] = useState([]);
   const [newName, setNewName] = useState("");
   const [newNumber, setNewNumber] = useState("");
   const [match, newMatch] = useState([]);
+  const [stateMessage, setMessage] = useState(null);
+  const [stateErrorMessage, setErrorMessage] = useState(null);
 
   useEffect(() => {
     fetch.getAll().then((data) => setPersons(data));
-  }, []);
+  });
 
   function handleNameChange(event) {
     setNewName(event.target.value);
@@ -33,18 +36,48 @@ const App = () => {
     if (window.confirm(message)) {
       const match = fetch.getMatch(newPerson.name);
       match.then((response) => {
-        console.log(response);
         if (response) {
           const message = `${newPerson.name} is already added to phonebook, replace the old number with a new one?`;
           if (window.confirm(message)) {
             fetch.updateContact(newPerson.name, newPerson);
-            fetch.getAll().then((response) => setPersons(response));
+            fetch
+              .getAll()
+              .then((response) => {
+                setPersons(response);
+                setMessage(`${newPerson.name} number updated`);
+                setTimeout(() => {
+                  setMessage(null);
+                }, 4000);
+              })
+              .catch((error) => {
+                setErrorMessage(error);
+                setTimeout(() => {
+                  setErrorMessage(null);
+                }, 4000);
+              });
           } else {
-            return alert(`${newPerson.name} is already added to phonebook`);
+            setErrorMessage(`${newPerson.name} is already added to phonebook`);
+            setTimeout(() => {
+              setErrorMessage(null);
+            }, 3000);
           }
         } else {
           fetch.createContact(newPerson);
-          console.log("new contact created");
+          fetch
+            .getAll()
+            .then((data) => {
+              setPersons(data);
+              setMessage(`${newPerson.name} added`);
+              setTimeout(() => {
+                setMessage(null);
+              }, 4000);
+            })
+            .catch((error) => {
+              setErrorMessage(error);
+              setTimeout(() => {
+                setErrorMessage(null);
+              }, 4000);
+            });
         }
       });
     }
@@ -70,6 +103,7 @@ const App = () => {
       <Filter handlePersonSearch={handlePersonSearch} />
       <form onSubmit={submitPerson}>
         <h2>Add new contact:</h2>
+        <Notification message={stateMessage} error={stateErrorMessage} />
         <div>
           <AddContact
             name={newName}

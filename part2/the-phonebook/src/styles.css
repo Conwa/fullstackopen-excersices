@@ -1,0 +1,15 @@
+.error__message {
+  background-color: rgb(176, 176, 176);
+  border: 3px solid red;
+  border-radius: 0.5rem;
+  color: red;
+  padding-left: 0.5rem;
+}
+
+.successful__message {
+  background-color: rgb(176, 176, 176);
+  border: 3px solid green;
+  border-radius: 0.5rem;
+  color: green;
+  padding-left: 0.5rem;
+}

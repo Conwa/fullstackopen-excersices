@@ -1,8 +1,5 @@
 import Person from "./Person";
 
-/*OPTIONAL RETURN LIST GIVEN BY KEY-UP
-COULDN´T MAKE IT WORK WHEN NEEDING TO ELIMINATE CONTACTS */
-
 const ReturnList = ({ match, persons, setPersons }) => {
   if (
     Object.keys(match).length === 0 &&
