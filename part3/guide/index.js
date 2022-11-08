@@ -1,5 +1,6 @@
 const express = require("express");
 const app = express();
+const cors = require("cors");
 
 let notes = [
   {
@@ -29,6 +30,7 @@ let notes = [
 ];
 
 /*METODOS*/
+app.use(cors());
 app.use(express.json());
 
 app.get("/", (request, response) => {
