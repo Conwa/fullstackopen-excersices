@@ -8,7 +8,6 @@ const Person = ({ id, name, number, setPersons }) => {
       fetch.getAll().then((data) => setPersons(data));
     }
   };
-
   return (
     <>
       <p key={id}>
