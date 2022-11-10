@@ -15,7 +15,7 @@ const App = () => {
 
   useEffect(() => {
     fetch.getAll().then((data) => setPersons(data));
-  });
+  }, []);
 
   function handleNameChange(event) {
     setNewName(event.target.value);
