@@ -69,7 +69,7 @@ app.get("/", (req, res) => {
 /*get all contacts - MONGO VERSION*/
 app.get("/api/phonebook", (request, response) => {
   Contact.find({}).then((contacts) => {
-    response.json(contacts);
+    response.json(contacts.map((contact) => contact.toJSON()));
   });
 });
 
@@ -79,31 +79,47 @@ const generateId = () => {
   return newId;
 };
 
-/*post new person to phonebook*/
+/*post new person to phonebook - LOCAL VERSION*/
+// app.post("/api/phonebook", (request, response) => {
+//   const body = request.body;
+//   if (!body.name) {
+//     return response.status(400).json({ error: "name missing" });
+//   }
+//   if (!body.number) {
+//     return response.status(400).json({ error: "number missing" });
+//   }
+//   const aMatch = phonebook.some((person) => {
+//     return person.name.toLowerCase() === body.name.toLowerCase();
+//   });
+//   if (aMatch) {
+//     return response.status(400).json({ error: "name already added" });
+//   }
+
+//   const person = {
+//     name: body.name,
+//     number: body.number,
+//     id: generateId(),
+//   };
+
+//   phonebook = phonebook.concat(person);
+
+//   response.json(phonebook);
+// });
+
+/*post new person to phonebook - MONGO VERSION*/
 app.post("/api/phonebook", (request, response) => {
   const body = request.body;
-  if (!body.name) {
-    return response.status(400).json({ error: "name missing" });
+  if (body.name === "" || body.number === "") {
+    return response.status(400).send({ error: "content missing" });
   }
-  if (!body.number) {
-    return response.status(400).json({ error: "number missing" });
-  }
-  const aMatch = phonebook.some((person) => {
-    return person.name.toLowerCase() === body.name.toLowerCase();
-  });
-  if (aMatch) {
-    return response.status(400).json({ error: "name already added" });
-  }
-
-  const person = {
+  const contact = new Contact({
     name: body.name,
     number: body.number,
-    id: generateId(),
-  };
+  });
 
-  phonebook = phonebook.concat(person);
-
-  response.json(phonebook);
+  contact.save().then((newContact) => {
+    response.json(newContact);
+  });
 });
 
 /*delete person*/
