@@ -1,12 +1,11 @@
-const { request, response } = require("express");
 const express = require("express");
-const { token } = require("morgan");
 const app = express();
 var morgan = require("morgan");
-
 const cors = require("cors");
+require("dotenv").config();
+const Contact = require("./models/contact");
 
-/*database for now */
+/*database for previous exercises */
 let phonebook = [
   {
     name: "hola paaa",
@@ -42,18 +41,36 @@ app.use(
   morgan(":method :url :status :res[content-length] - :response-time ms :body")
 );
 
+//alternative method for logging requests to console
+
+// const requestLogger = (request, response, next) => {
+//   console.log("Method:", request.method);
+//   console.log("Path:  ", request.path);
+//   console.log("Body:  ", request.body);
+//   console.log("---");
+//   next();
+// };
+// app.use(requestLogger);
+
 /*Cross-origin resource sharing (CORS) is a mechanism that allows restricted resources on a web page
  to be requested from another domain outside the domain from which the first resource was served */
 app.use(cors());
 
-/*default entry point*/
+/*default entry point, not showing don´t know why*/
 app.get("/", (req, res) => {
   res.send("<h1>Hello World!</h1>");
 });
 
-/*get all contacts*/
+/*get all contacts - LOCAL VERSION*/
+// app.get("/api/phonebook", (request, response) => {
+//   response.json(phonebook);
+// });
+
+/*get all contacts - MONGO VERSION*/
 app.get("/api/phonebook", (request, response) => {
-  response.json(phonebook);
+  Contact.find({}).then((contacts) => {
+    response.json(contacts);
+  });
 });
 
 /*random ID generator*/
