@@ -4,6 +4,7 @@ var morgan = require("morgan");
 const cors = require("cors");
 require("dotenv").config();
 const Contact = require("./models/contact");
+const { request, response } = require("express");
 
 /*database for previous exercises */
 let phonebook = [
@@ -66,21 +67,34 @@ app.get("/", (req, res) => {
 //   response.json(phonebook);
 // });
 
-/*get all contacts - MONGO VERSION*/
+/*get all contacts - MongoDB VERSION*/
 app.get("/api/phonebook", (request, response) => {
   Contact.find({}).then((contacts) => {
     response.json(contacts.map((contact) => contact.toJSON()));
   });
 });
 
-/*random ID generator*/
-const generateId = () => {
-  const newId = Math.floor(Math.random() * 100000 + 1);
-  return newId;
-};
+/*get individual contact by ID */
+app.get("/api/phonebook/:id", (request, response, next) => {
+  Contact.findById(request.params.id)
+    .then((contact) => {
+      if (contact) {
+        response.json(contact);
+      } else {
+        response.status(404).end();
+      }
+    })
+    .catch((error) => {
+      next(error);
+    });
+});
 
 /*post new person to phonebook - LOCAL VERSION*/
 // app.post("/api/phonebook", (request, response) => {
+//   let generateId = () => {
+//     const newId = Math.floor(Math.random() * 100000 + 1);
+//     return newId;
+//   };
 //   const body = request.body;
 //   if (!body.name) {
 //     return response.status(400).json({ error: "name missing" });
@@ -106,7 +120,7 @@ const generateId = () => {
 //   response.json(phonebook);
 // });
 
-/*post new person to phonebook - MONGO VERSION*/
+/*post new person to phonebook - MongoDB VERSION*/
 app.post("/api/phonebook", (request, response) => {
   const body = request.body;
   if (body.name === "" || body.number === "") {
@@ -122,19 +136,55 @@ app.post("/api/phonebook", (request, response) => {
   });
 });
 
-/*delete person*/
-app.delete("/api/phonebook/:id", (request, response) => {
-  const id = Number(request.params.id);
-  phonebook = phonebook.filter((person) => person.id !== id);
-
-  response.status(204).end();
+/*update existing contact*/
+app.put("/api/phonebook/:id", (request, response, next) => {
+  const body = request.body;
+  const updatedContact = { name: body.name, number: body.number };
+  // console.log(updatedContact);
+  Contact.findByIdAndUpdate(request.params.id, updatedContact, { new: true })
+    .then((updatedContact) => {
+      response.json(updatedContact);
+    })
+    .catch((error) => {
+      next(error);
+    });
 });
 
-/*method for unknowns endpoints*/
+/*delete person - LOCAL VERSION*/
+// app.delete("/api/phonebook/:id", (request, response) => {
+//   const id = Number(request.params.id);
+//   phonebook = phonebook.filter((person) => person.id !== id);
+//   response.status(204).end();
+// });
+
+/*delete person - MongoDB VERSION */
+app.delete("/api/phonebook/:id", (request, response, next) => {
+  console.log(request.params.id);
+  Contact.findByIdAndRemove(request.params.id)
+    .then((result) => {
+      response.status(204).end();
+    })
+    .catch((error) => next(error));
+});
+
+/*middleware for unknowns endpoints*/
 const unknownEndpoint = (request, response) => {
   response.status(404).send({ error: "unknown endpoint" });
 };
 app.use(unknownEndpoint);
+
+/*middleware for errors*/
+const errorHandler = (error, request, response, next) => {
+  console.error(error.message);
+
+  if (error.name === "CastError") {
+    return response.status(400).send({ error: "malformatted id" });
+  }
+
+  next(error);
+};
+
+app.use(errorHandler);
 
 /*Binds and listens for connections on the specified host and port*/
 const PORT = process.env.PORT || 3001;
