@@ -4,31 +4,30 @@ var morgan = require("morgan");
 const cors = require("cors");
 require("dotenv").config();
 const Contact = require("./models/contact");
-const { request, response } = require("express");
 
 /*database for previous exercises */
-let phonebook = [
-  {
-    name: "hola paaa",
-    number: "234324",
-    id: 12,
-  },
-  {
-    name: "lucia",
-    number: "12345",
-    id: 18,
-  },
-  {
-    name: "Lucia F",
-    number: "42612257",
-    id: 19,
-  },
-  {
-    name: "javier",
-    number: "2342344534",
-    id: 20,
-  },
-];
+// let phonebook = [
+//   {
+//     name: "hola paaa",
+//     number: "234324",
+//     id: 12,
+//   },
+//   {
+//     name: "lucia",
+//     number: "12345",
+//     id: 18,
+//   },
+//   {
+//     name: "Lucia F",
+//     number: "42612257",
+//     id: 19,
+//   },
+//   {
+//     name: "javier",
+//     number: "2342344534",
+//     id: 20,
+//   },
+// ]
 
 /*It parses incoming requests with JSON payloads*/
 app.use(express.json());
@@ -164,7 +163,7 @@ app.put("/api/phonebook/:id", (request, response, next) => {
 app.delete("/api/phonebook/:id", (request, response, next) => {
   console.log(request.params.id);
   Contact.findByIdAndRemove(request.params.id)
-    .then((result) => {
+    .then((response) => {
       response.status(204).end();
     })
     .catch((error) => {

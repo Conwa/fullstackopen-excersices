@@ -9,7 +9,8 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "build:ui": "rimraf ./build && cd D:/Proyectos/fullstackopen-excersices/part2/the-phonebook && npm run build",
     "deploy": "flyctl deploy",
-    "logs:prod": "flyctl logs"
+    "logs:prod": "flyctl logs",
+    "lint": "eslint . --fix"
   },
   "author": "",
   "license": "ISC",
@@ -21,5 +22,8 @@
     "morgan": "^1.10.0",
     "nodemon": "^2.0.20",
     "rimraf": "^3.0.2"
+  },
+  "devDependencies": {
+    "eslint": "^8.29.0"
   }
 }

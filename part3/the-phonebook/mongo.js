@@ -21,7 +21,7 @@ const Contact = mongoose.model("Contact", contactSchema);
 // to get rid of the ObjectID that MongoDB offers,
 
 if (user === undefined || phoneNumber === undefined) {
-  mongoose.connect(url).then((result) => {
+  mongoose.connect(url).then(() => {
     Contact.find({}).then((result) => {
       const list = result.map((contact) => {
         let { name: name, phoneNumber: phoneNumber } = contact;
@@ -38,7 +38,7 @@ if (user === undefined || phoneNumber === undefined) {
 else {
   mongoose
     .connect(url)
-    .then((result) => {
+    .then(() => {
       const contact = new Contact({
         name: user,
         phoneNumber: phoneNumber,
