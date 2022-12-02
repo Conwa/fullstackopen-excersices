@@ -17,71 +17,75 @@ const App = () => {
     fetch.getAll().then((data) => setPersons(data));
   }, []);
 
+  const submitPerson = (event) => {
+    event.preventDefault();
+
+    const contactMatch = persons.filter((person) => {
+      return person.name.toLowerCase() === newName.toLowerCase();
+    });
+
+    if (contactMatch.length !== 0) {
+      fetch.getMatch(contactMatch[0].name).then((response) => {
+        if (response) {
+          // console.log(response);
+          const message = `${contactMatch[0].name} is already added to phonebook, replace the old number with a new one?`;
+          if (window.confirm(message)) {
+            const updatedContact = { ...contactMatch[0], number: newNumber };
+            fetch
+              .updateContact(contactMatch[0].id, updatedContact)
+              .then((response) => {
+                fetch.getAll().then((data) => setPersons(data));
+                setMessage(`${contactMatch[0].name} number updated`);
+                setTimeout(() => {
+                  setMessage(null);
+                }, 4000);
+              })
+              .catch((error) => {
+                // console.log(error.response.data.error);
+                setErrorMessage(error.response.data.error);
+                setTimeout(() => {
+                  setErrorMessage(null);
+                }, 4000);
+              });
+          } else {
+            setErrorMessage(
+              `${contactMatch[0].name} is already added to phonebook`
+            );
+            setTimeout(() => {
+              setErrorMessage(null);
+            }, 3000);
+          }
+        }
+      });
+    } else {
+      const newPerson = { name: newName, number: newNumber };
+      fetch
+        .createContact(newPerson)
+        .then((response) => {
+          fetch.getAll().then((data) => {
+            setPersons(data);
+          });
+          setMessage(`${newPerson.name} contact created`);
+          setTimeout(() => {
+            setMessage(null);
+          }, 4000);
+        })
+        .catch((error) => {
+          // console.log(error.response.data.error);
+          setErrorMessage(error.response.data.error);
+          setTimeout(() => {
+            setErrorMessage(null);
+          }, 4000);
+        });
+    }
+  };
+
   function handleNameChange(event) {
     setNewName(event.target.value);
   }
   function handleNumberChange(event) {
     setNewNumber(event.target.value);
   }
-
-  const submitPerson = (event) => {
-    event.preventDefault();
-    const newPerson = {
-      name: newName,
-      number: newNumber,
-    };
-
-    const message = `Add ${newName}?`;
-
-    if (window.confirm(message)) {
-      const match = fetch.getMatch(newPerson.name);
-      match.then((response) => {
-        if (response) {
-          const message = `${newPerson.name} is already added to phonebook, replace the old number with a new one?`;
-          if (window.confirm(message)) {
-            fetch.updateContact(newPerson.name, newPerson);
-            fetch
-              .getAll()
-              .then((response) => {
-                setPersons(response);
-                setMessage(`${newPerson.name} number updated`);
-                setTimeout(() => {
-                  setMessage(null);
-                }, 4000);
-              })
-              .catch((error) => {
-                setErrorMessage(error);
-                setTimeout(() => {
-                  setErrorMessage(null);
-                }, 4000);
-              });
-          } else {
-            setErrorMessage(`${newPerson.name} is already added to phonebook`);
-            setTimeout(() => {
-              setErrorMessage(null);
-            }, 3000);
-          }
-        } else {
-          fetch.createContact(newPerson);
-          fetch
-            .getAll()
-            .then((data) => {
-              setPersons(data);
-              setMessage(`${newPerson.name} added`);
-              setTimeout(() => {
-                setMessage(null);
-              }, 4000);
-            })
-            .catch((error) => {
-              setErrorMessage(error);
-              setTimeout(() => {
-                setErrorMessage(null);
-              }, 4000);
-            });
-        }
-      });
-    }
-  };
 
   function handlePersonSearch(event) {
     let search = event.target.value;

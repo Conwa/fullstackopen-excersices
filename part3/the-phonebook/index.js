@@ -121,19 +121,19 @@ app.get("/api/phonebook/:id", (request, response, next) => {
 // });
 
 /*post new person to phonebook - MongoDB VERSION*/
-app.post("/api/phonebook", (request, response) => {
+app.post("/api/phonebook", (request, response, next) => {
   const body = request.body;
-  if (body.name === "" || body.number === "") {
-    return response.status(400).send({ error: "content missing" });
-  }
   const contact = new Contact({
     name: body.name,
     number: body.number,
   });
 
-  contact.save().then((newContact) => {
-    response.json(newContact);
-  });
+  contact
+    .save()
+    .then((newContact) => {
+      response.json(newContact);
+    })
+    .catch((error) => next(error));
 });
 
 /*update existing contact*/
@@ -141,7 +141,10 @@ app.put("/api/phonebook/:id", (request, response, next) => {
   const body = request.body;
   const updatedContact = { name: body.name, number: body.number };
   // console.log(updatedContact);
-  Contact.findByIdAndUpdate(request.params.id, updatedContact, { new: true })
+  Contact.findByIdAndUpdate(request.params.id, updatedContact, {
+    new: true,
+    runValidators: true,
+  })
     .then((updatedContact) => {
       response.json(updatedContact);
     })
@@ -164,7 +167,9 @@ app.delete("/api/phonebook/:id", (request, response, next) => {
     .then((result) => {
       response.status(204).end();
     })
-    .catch((error) => next(error));
+    .catch((error) => {
+      next(error);
+    });
 });
 
 /*middleware for unknowns endpoints*/
@@ -175,12 +180,14 @@ app.use(unknownEndpoint);
 
 /*middleware for errors*/
 const errorHandler = (error, request, response, next) => {
-  console.error(error.message);
+  console.error(error.name);
 
   if (error.name === "CastError") {
     return response.status(400).send({ error: "malformatted id" });
+  } else if (error.name === "ValidationError") {
+    console.log(error.message);
+    return response.status(400).json({ error: error.message });
   }
-
   next(error);
 };
 
@@ -191,3 +198,5 @@ const PORT = process.env.PORT || 3001;
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
 });
+
+//return response.status(400).send({ error: error });

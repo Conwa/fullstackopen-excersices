@@ -21,21 +21,26 @@ const createContact = (newObject) => {
   return request.then((response) => response.data);
 };
 
-const updateContact = (name, updatedContact) => {
-  const getMatch = axios.get(baseUrl).then((response) => {
-    const match = response.data.filter((el) => {
-      return el.name.toLowerCase() === name.toLowerCase();
-    });
-    const id = match[0].id;
-    const request = axios.put(`${baseUrl}/${id}`, updatedContact);
-    return request.then((response) => response.data);
-  });
+//original wrong aproach, not getting promise result
+// const updateContact = (name, updatedContact) => {
+//   const getMatch = axios.get(baseUrl).then((response) => {
+//     const match = response.data.filter((el) => {
+//       return el.name.toLowerCase() === name.toLowerCase();
+//     });
+//     const id = match[0].id;
+//     const request = axios.put(`${baseUrl}/${id}`, updatedContact);
+//     return request.then((response) => response.data);
+//   });
+// };
+const updateContact = (id, updatedContact) => {
+  const update = axios.put(`${baseUrl}/${id}`, updatedContact);
+  return update.then((response) => response.data);
 };
 
 const deleteContact = (id) => {
   const request = axios.delete(`${baseUrl}/${id}`);
-  request
-    .then((response) => console.log("deleted"))
+  return request
+    .then((response) => response.data)
     .catch((error) => {
       console.error("There was an error!", error);
     });
