@@ -6,7 +6,7 @@
   "scripts": {
     "start": "node index.js",
     "dev": "nodemon index.js",
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "jest --verbose",
     "build:ui": "rimraf ./build && cd D:/Proyectos/fullstackopen-excersices/part2/the-phonebook && npm run build",
     "deploy": "flyctl deploy",
     "logs:prod": "flyctl logs",
