@@ -1,17 +1,6 @@
 const listHelper = require("../utils/list_helper");
 
-describe("cases:", () => {
-  const oneBlog = [
-    {
-      _id: "5a422aa71b54a676234d17f8",
-      title: "Go To Statement Considered Harmful",
-      author: "Edsger W. Dijkstra",
-      url: "http://www.u.arizona.edu/~rubinson/copyright_violations/Go_To_Considered_Harmful.html",
-      likes: 5,
-      __v: 0,
-    },
-  ];
-
+describe("most liked:", () => {
   const blogs = [
     {
       _id: "638df0fad62ee5fc1524610d",
@@ -55,16 +44,13 @@ describe("cases:", () => {
     },
   ];
 
-  test("if empty it returns 0", () => {
-    const result = listHelper.totalLikes([]);
-    expect(result).toBe(0);
+  test("no blogs returns undefined", () => {
+    const result = listHelper.favouriteBlog([]);
+    expect(result).toEqual(undefined);
   });
-  test("only one blog", () => {
-    const result = listHelper.totalLikes(oneBlog);
-    expect(result).toBe(5);
-  });
-  test("else it sum total likes", () => {
-    const result = listHelper.totalLikes(blogs);
-    expect(result).toBe(70036);
+
+  test("many blogs returns the most liked", () => {
+    const result = listHelper.favouriteBlog(blogs);
+    expect(result).toEqual({ author: "juan", likes: 18000, title: "test5" });
   });
 });
