@@ -5,9 +5,9 @@
   "main": "index.js",
   "scripts": {
     "build:ui": "rimraf ./build && cd D:/Proyectos/fullstackopen-excersices/part2/notes && npm run build",
-    "start": "node index.js",
-    "dev": "nodemon index.js",
-    "test": "jest --verbose",
+    "start": "cross-env NODE_ENV=production node index.js",
+    "dev": "cross-env NODE_ENV=development nodemon index.js",
+    "test": "cross-env NODE_ENV=test jest --verbose --runInBand --forceExit",
     "deploy": "flyctl deploy",
     "logs:prod": "fly logs"
   },
