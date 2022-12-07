@@ -32,7 +32,14 @@ test("length of the blogs database", async () => {
 describe("post", () => {
   test("can add posts", async () => {
     const dummyBlog = { author: "dummy", likes: 1, title: "dummyBlog test" };
+    await api
+      .post("/api/blogs")
+      .send(dummyBlog)
+      .expect(201)
+      .expect("Content-Type", /application\/json/);
 
-    await api.post("/api/blogs").send(dummyBlog).expect(201);
-  });
+    const blogs = await helper.blogsInServer();
+    const blogsTitles = blogs.map((blog) => blog.title);
+    expect(blogsTitles).toContain("dummyBlog test");
+  }, 100000);
 });
