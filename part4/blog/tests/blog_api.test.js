@@ -17,7 +17,7 @@ beforeEach(async () => {
 
 //route connection working and returning correct
 //number of blogs
-describe("default get method", () => {
+describe("get blogs", () => {
   test("api call returns notes", async () => {
     await api
       .get("/api/blogs")
@@ -29,11 +29,17 @@ describe("default get method", () => {
     const response = await api.get("/api/blogs");
     expect(response.body).toHaveLength(helper.initialBlogs.length);
   });
+  test("blogs have id property", async () => {
+    const response = await api.get("/api/blogs");
+    const IDs = response.body.map((blog) => blog.id);
+
+    expect(IDs).toBeDefined();
+  });
 });
 
 //testing adittion of new blogs according
 //to exersice requirements
-describe("post", () => {
+describe("post blogs", () => {
   test("can add posts", async () => {
     const dummyBlog = {
       title: "dummyBlog test",
@@ -51,7 +57,8 @@ describe("post", () => {
     const blogsTitles = blogs.map((blog) => blog.title);
     expect(blogsTitles).toContain("dummyBlog test");
   }, 100000);
-  test("likes undefined equals to 0", async () => {
+
+  test("likes that are undefined equals to 0", async () => {
     const dummyBlog = {
       title: "dummyBlog test with no likes",
       author: "dummy",
@@ -71,7 +78,7 @@ describe("post", () => {
     expect(targetBlog[0].likes).toBe(0);
   });
 
-  test("url or title undefined equals to 400 Bad Request", async () => {
+  test("url or title undefined returns to 400 Bad Request", async () => {
     const interchangeableDummy1 = {
       author: "dummy",
       url: "test.com",
@@ -83,10 +90,10 @@ describe("post", () => {
       likes: 1,
     };
 
-    await api.post("/api/blogs").send(interchangeableDummy1).expect(201);
+    await api.post("/api/blogs").send(interchangeableDummy1).expect(400);
 
     const blogsUnmodified = await helper.blogsInServer();
-    expect(blogsUnmodified).toHaveLength(helper.initialBlogs);
+    expect(blogsUnmodified).toHaveLength(helper.initialBlogs.length);
   }, 10000);
 });
 

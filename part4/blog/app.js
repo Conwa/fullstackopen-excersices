@@ -6,7 +6,9 @@ const notesRouter = require("./controllers/blogs");
 const middleware = require("./utils/middleware");
 const logger = require("./utils/logger");
 const mongoose = require("mongoose");
-require("express-async-errors");
+
+//prefer try-catch to practice
+// require("express-async-errors");
 
 logger.info("connecting to", config.MONGODB_URI);
 
