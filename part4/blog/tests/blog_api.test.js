@@ -2,13 +2,17 @@ const supertest = require("supertest");
 const app = require("../app");
 const api = supertest(app);
 const helper = require("./test_helper");
-
+const Blog = require("../models/blog");
 //function to irrigate test-database
-//with data
+//with data, copy of the example given
+//in the notes app
 
-// beforeEach(async () => {
-//     await
-// })
+beforeEach(async () => {
+  await Blog.deleteMany({});
+  const blogObjects = helper.initialBlogs.map((blog) => new Blog(blog));
+  const promiseArray = blogObjects.map((blog) => blog.save());
+  await Promise.all(promiseArray);
+});
 
 //testing route connection worked
 test("api call returns notes", async () => {
@@ -16,4 +20,19 @@ test("api call returns notes", async () => {
     .get("/api/blogs")
     .expect(200)
     .expect("Content-Type", /application\/json/);
+});
+
+//test for recieving exact number of blogs
+test("length of the blogs database", async () => {
+  const response = await api.get("/api/blogs");
+  expect(response.body).toHaveLength(helper.initialBlogs.length);
+});
+
+//testing try adding new blog post
+describe("post", () => {
+  test("can add posts", async () => {
+    const dummyBlog = { author: "dummy", likes: 1, title: "dummyBlog test" };
+
+    await api.post("/api/blogs").send(dummyBlog).expect(201);
+  });
 });
