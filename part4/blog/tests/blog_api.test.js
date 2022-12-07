@@ -42,4 +42,22 @@ describe("post", () => {
     const blogsTitles = blogs.map((blog) => blog.title);
     expect(blogsTitles).toContain("dummyBlog test");
   }, 100000);
+  test("likes undefined equals to 0", async () => {
+    const dummyBlog = {
+      author: "dummy",
+      title: "dummyBlog test with no likes",
+    };
+
+    await api
+      .post("/api/blogs")
+      .send(dummyBlog)
+      .expect(201)
+      .expect("Content-Type", /application\/json/);
+
+    const allBlogs = await helper.blogsInServer();
+    const targetBlog = await allBlogs.filter(
+      (blog) => blog.title === "dummyBlog test with no likes"
+    );
+    expect(targetBlog[0].likes).toBe(0);
+  });
 });
