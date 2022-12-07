@@ -1,4 +1,5 @@
 const supertest = require("supertest");
+const mongoose = require("mongoose");
 const app = require("../app");
 const api = supertest(app);
 const helper = require("./test_helper");
@@ -70,21 +71,25 @@ describe("post", () => {
     expect(targetBlog[0].likes).toBe(0);
   });
 
-  // test("url or title undefined equals to 400 Bad Request", async () => {
-  //   const interchangeableDummy1 = {
-  //     author: "dummy",
-  //     url: "test.com",
-  //     likes: 1,
-  //   };
-  //   const interchangeableDummy2 = {
-  //     title: "dummyBlog test",
-  //     author: "dummy",
-  //     likes: 1,
-  //   };
+  test("url or title undefined equals to 400 Bad Request", async () => {
+    const interchangeableDummy1 = {
+      author: "dummy",
+      url: "test.com",
+      likes: 1,
+    };
+    const interchangeableDummy2 = {
+      title: "dummyBlog test",
+      author: "dummy",
+      likes: 1,
+    };
 
-  //   await api.post("/api/blogs").send(interchangeableDummy1).expect(400);
+    await api.post("/api/blogs").send(interchangeableDummy1).expect(201);
 
-  //   const blogsUnmodified = await helper.blogsInServer;
-  //   expect(blogsUnmodified).toHaveLength(helper.initialBlogs);
-  // }, 10000);
+    const blogsUnmodified = await helper.blogsInServer();
+    expect(blogsUnmodified).toHaveLength(helper.initialBlogs);
+  }, 10000);
+});
+
+afterAll(() => {
+  mongoose.connection.close();
 });
