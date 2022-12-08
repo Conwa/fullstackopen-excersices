@@ -118,6 +118,25 @@ describe("delete blogs", () => {
     const blogsUnmodified = await helper.blogsInServer();
     expect(blogsUnmodified).toHaveLength(helper.initialBlogs.length);
   });
+  test("incorrect or non matching ID result in 400", async () => {
+    const dummyDeleteBlog = {
+      title: "dummyDeleteBlog test",
+      author: "dummy",
+      url: "test.com",
+      likes: 1,
+    };
+
+    const postedBLog = await api
+      .post("/api/blogs")
+      .send(dummyDeleteBlog)
+      .expect(201);
+    const fakeID = postedBLog.body.id.concat("a");
+
+    await api.delete(`/api/blogs/${fakeID}`).expect(400);
+
+    const blogsUnmodified = await helper.blogsInServer();
+    expect(blogsUnmodified).toHaveLength(helper.initialBlogs.length + 1);
+  });
 });
 
 afterAll(() => {
