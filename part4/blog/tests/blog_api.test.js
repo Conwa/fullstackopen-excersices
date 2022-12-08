@@ -4,6 +4,7 @@ const app = require("../app");
 const api = supertest(app);
 const helper = require("./test_helper");
 const Blog = require("../models/blog");
+const blog = require("../models/blog");
 //function to irrigate test-database
 //with data, copy of the example given
 //in the notes app
@@ -94,7 +95,29 @@ describe("post blogs", () => {
 
     const blogsUnmodified = await helper.blogsInServer();
     expect(blogsUnmodified).toHaveLength(helper.initialBlogs.length);
-  }, 10000);
+  });
+});
+
+describe("delete blogs", () => {
+  test("post blog and then delete it", async () => {
+    const dummyDeleteBlog = {
+      title: "dummyDeleteBlog test",
+      author: "dummy",
+      url: "test.com",
+      likes: 1,
+    };
+
+    const postedBLog = await api
+      .post("/api/blogs")
+      .send(dummyDeleteBlog)
+      .expect(201);
+    const blogID = postedBLog.body.id;
+
+    await api.delete(`/api/blogs/${blogID}`).expect(204);
+
+    const blogsUnmodified = await helper.blogsInServer();
+    expect(blogsUnmodified).toHaveLength(helper.initialBlogs.length);
+  });
 });
 
 afterAll(() => {
