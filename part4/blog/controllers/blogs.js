@@ -1,5 +1,6 @@
 const blogsRouter = require("express").Router();
 const { response } = require("../app");
+const blog = require("../models/blog");
 const Blog = require("../models/blog");
 
 blogsRouter.get("/", async (request, response) => {
@@ -34,6 +35,23 @@ blogsRouter.delete("/:id", async (request, response, next) => {
   }
 });
 
-blogsRouter.put("/:id", async (request, response, next) => {});
+blogsRouter.put("/:id", async (request, response, next) => {
+  let _id = request.params.id;
+  const body = request.body;
+  const blog = {
+    title: body.title,
+    author: body.author,
+    url: body.url,
+    likes: body.likes,
+  };
+  try {
+    const updatedBlog = Blog.findByIdAndUpdate(request.params.id, blog, {
+      new: true,
+    });
+    response.json(updatedBlog.toJSON());
+  } catch (error) {
+    next(error);
+  }
+});
 
 module.exports = blogsRouter;

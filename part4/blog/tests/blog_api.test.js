@@ -99,7 +99,7 @@ describe("post blogs", () => {
 });
 
 describe("delete blogs", () => {
-  test("post blog and then delete it", async () => {
+  test("post and delete blog", async () => {
     const dummyDeleteBlog = {
       title: "dummyDeleteBlog test",
       author: "dummy",
@@ -136,6 +136,41 @@ describe("delete blogs", () => {
 
     const blogsUnmodified = await helper.blogsInServer();
     expect(blogsUnmodified).toHaveLength(helper.initialBlogs.length + 1);
+  });
+});
+
+describe("update blogs", () => {
+  test("post and update blog", async () => {
+    const dummyUpdateBlog = {
+      title: "dummyUpdateBlog test",
+      author: "dummy",
+      url: "test.com",
+      likes: 1,
+    };
+    const dummyUpdatedBlog = {
+      title: "dummyUpdateBlog test",
+      author: "dummy",
+      url: "test.com",
+      likes: 12,
+    };
+
+    await api.post("/api/blogs").send(dummyUpdateBlog).expect(201);
+
+    const blogs = await helper.blogsInServer();
+    const blogToBeUpdated = blogs.find(
+      (blog) => blog.title === "dummyUpdateBlog test"
+    );
+    expect(blogToBeUpdated.likes).toBe(1);
+
+    await api
+      .put(`/api/blogs/${blogToBeUpdated.id}`)
+      .send(dummyUpdatedBlog)
+      .expect(200);
+
+    const blogIsUpdated = blogs.find(
+      (blog) => blog.title === "dummyUpdateBlog test"
+    );
+    expect(blogIsUpdated).toBe(12);
   });
 });
 
