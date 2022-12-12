@@ -141,36 +141,57 @@ describe("delete blogs", () => {
 
 describe("update blogs", () => {
   test("post and update blog", async () => {
-    const dummyUpdateBlog = {
+    const dummyBlog = {
       title: "dummyUpdateBlog test",
       author: "dummy",
       url: "test.com",
       likes: 1,
     };
-    const dummyUpdatedBlog = {
-      title: "dummyUpdateBlog test",
-      author: "dummy",
-      url: "test.com",
-      likes: 12,
-    };
 
-    await api.post("/api/blogs").send(dummyUpdateBlog).expect(201);
+    await api.post("/api/blogs").send(dummyBlog).expect(201);
 
     const blogs = await helper.blogsInServer();
     const blogToBeUpdated = blogs.find(
-      (blog) => blog.title === "dummyUpdateBlog test"
+      (blog) => blog.title === dummyBlog.title
     );
     expect(blogToBeUpdated.likes).toBe(1);
 
-    await api
-      .put(`/api/blogs/${blogToBeUpdated.id}`)
-      .send(dummyUpdatedBlog)
-      .expect(200);
+    const dummyUpdatedBlog = {
+      ...blogToBeUpdated,
+      likes: 12,
+    };
 
-    const blogIsUpdated = blogs.find(
+    await api
+      .put(`/api/blogs/${dummyUpdatedBlog.id}`)
+      .send(dummyUpdatedBlog)
+      .expect(200)
+      .expect("Content-Type", /application\/json/);
+
+    const blogs2 = await helper.blogsInServer();
+    const blogIsUpdated = blogs2.find(
       (blog) => blog.title === "dummyUpdateBlog test"
     );
-    expect(blogIsUpdated).toBe(12);
+    expect(blogIsUpdated.likes).toBe(12);
+  });
+  test("wrong ID returns 400 Bad Request", async () => {
+    const dummyBlog = {
+      title: "dummyUpdateBlog test",
+      author: "dummy",
+      url: "test.com",
+      likes: 1,
+    };
+    await api.post("/api/blogs").send(dummyBlog).expect(201);
+
+    const blogs = await helper.blogsInServer();
+    const blogToBeUpdated = await blogs.find(
+      (blog) => blog.title === dummyBlog.title
+    );
+
+    let wrongId = (blogToBeUpdated.id += "ab");
+
+    const dummyUpdatedBlog = { ...blogToBeUpdated, id: wrongId };
+
+    await api.put(`/api/blogs/${wrongId}`).send(dummyUpdatedBlog).expect(400);
   });
 });
 
