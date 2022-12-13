@@ -10,7 +10,10 @@ usersRouter.get("/", async (request, response, next) => {
 usersRouter.post("/", async (request, response, next) => {
   const body = request.body;
 
-  const passwordHashed = await bcrypt.hash(body.passwordHash, 10);
+  //algorith provided by bcrypt to hash password, the bigger the
+  //number the longer the hash process takes
+  const saltRounds = 10;
+  const passwordHashed = await bcrypt.hash(body.passwordHash, saltRounds);
 
   const user = new User({
     username: body.username,
