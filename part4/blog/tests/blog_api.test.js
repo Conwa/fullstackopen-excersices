@@ -4,7 +4,7 @@ const app = require("../app");
 const api = supertest(app);
 const helper = require("./test_helper");
 const Blog = require("../models/blog");
-const blog = require("../models/blog");
+
 //function to irrigate test-database
 //with data, copy of the example given
 //in the notes app

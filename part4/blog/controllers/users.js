@@ -18,6 +18,12 @@ usersRouter.post("/", async (request, response, next) => {
     return response.status(400).json({ error: "password must be provided" });
   }*/
 
+  if (body.passwordHash.length <= 3) {
+    return response.status(400).json({
+      error: `password length should be greather than 3 characters, current length: ${body.passwordHash.length}`,
+    });
+  }
+
   //algorith provided by bcrypt to hash password, the bigger the
   //number the longer the hash process takes
   const saltRounds = 10;
