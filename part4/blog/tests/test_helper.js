@@ -44,9 +44,9 @@ const initialBlogs = [
 ];
 
 const initialUsers = [
-  { username: "test1", passwordHash: 12345, name: "subject1" },
-  { username: "test2", passwordHash: 12345, name: "subject2" },
-  { username: "test3", passwordHash: 12345, name: "subject3" },
+  { username: "test1", passwordHash: "12345", name: "subject1" },
+  { username: "test2", passwordHash: "12345", name: "subject2" },
+  { username: "test3", passwordHash: "12345", name: "subject3" },
 ];
 
 const blogsInServer = async () => {
@@ -55,7 +55,7 @@ const blogsInServer = async () => {
 };
 
 const usersInServer = async () => {
-  const blogs = await User.find({});
+  const users = await User.find({});
   return users.map((user) => user.toJSON());
 };
 
@@ -63,4 +63,5 @@ module.exports = {
   initialBlogs,
   blogsInServer,
   initialUsers,
+  usersInServer,
 };
