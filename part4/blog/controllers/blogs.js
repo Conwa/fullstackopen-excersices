@@ -3,6 +3,8 @@ const blogsRouter = require("express").Router();
 const Blog = require("../models/blog");
 const User = require("../models/user");
 
+const jwt = require("jsonwebtoken");
+
 blogsRouter.get("/", async (request, response) => {
   const blogs = await Blog.find({}).populate("user", {
     username: 1,
@@ -17,6 +19,10 @@ blogsRouter.post("/", async (request, response, next) => {
 
   const userList = await User.find({});
   const firstUser = userList[0];
+
+  const userToken = request.token;
+
+  console.log(userToken);
 
   const blog = new Blog({
     title: body.title,
