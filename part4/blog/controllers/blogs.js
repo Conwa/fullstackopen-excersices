@@ -8,13 +8,14 @@ const jwt = require("jsonwebtoken");
 //give parameter request, it checks for bearer method of authentication
 //then, it just return the string given from position 7 to complete, to eliminate
 //the bearer and the whitespace, so you get the clean token sended in the request
-const getTokenFrom = (request) => {
-  const authorization = request.get("authorization");
-  if (authorization && authorization.toLowerCase().startsWith("bearer ")) {
-    return authorization.substring(7);
-  }
-  return null;
-};
+
+// const getTokenFrom = (request) => {
+//   const authorization = request.get("authorization");
+//   if (authorization && authorization.toLowerCase().startsWith("bearer ")) {
+//     return authorization.substring(7);
+//   }
+//   return null;
+// };
 
 blogsRouter.get("/", async (request, response) => {
   const blogs = await Blog.find({}).populate("user", {
@@ -31,7 +32,9 @@ blogsRouter.post("/", async (request, response, next) => {
   // const userList = await User.find({});
   // const firstUser = userList[0];
 
-  const token = getTokenFrom(request);
+  // console.log(request.token);
+
+  const token = request.token;
 
   const decodedToken = jwt.verify(token, process.env.SECRET);
   if (!decodedToken.id) {
