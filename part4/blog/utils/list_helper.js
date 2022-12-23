@@ -22,8 +22,17 @@ const favouriteBlog = (blogs) => {
   return undefined;
 };
 
+const mostBlogs = (blogs) => {
+  if (blogs.length !== 0) {
+    console.log(blogs);
+    let authors = blogs.reduce((acc, el) => {});
+  }
+  return undefined;
+};
+
 module.exports = {
   dummy,
   totalLikes,
   favouriteBlog,
+  mostBlogs,
 };
