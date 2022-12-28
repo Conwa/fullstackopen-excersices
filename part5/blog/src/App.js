@@ -22,6 +22,7 @@ const App = () => {
       console.log(user);
       setPassword("");
       setUsername("");
+      // window.localStorage.setItem("name", "juha tauriainen");
     } catch (error) {
       console.log(error);
     }
@@ -63,7 +64,7 @@ const App = () => {
         <h3>{user.name} logged in</h3>
         <button
           onClick={() => {
-            console.log("gola");
+            console.log(window.localStorage.getItem("name"));
           }}
         >
           log out
