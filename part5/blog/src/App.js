@@ -74,6 +74,7 @@ const App = () => {
         <button
           onClick={() => {
             window.localStorage.removeItem("loggedUser");
+            //setUser to trigger useEffect hook
             setUser(null);
           }}
         >
