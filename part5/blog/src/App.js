@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import Blog from "./components/Blog";
+import CreateBlog from "./components/CreateBlog";
 import blogService from "./services/blogs";
 import loginService from "./services/login";
 
@@ -66,10 +67,9 @@ const App = () => {
 
   const loggedView = () => (
     <>
-      {" "}
       <h2>BLOGS</h2>
       <>
-        {" "}
+        <CreateBlog></CreateBlog>
         <h3>{user.name} logged in</h3>
         <button
           onClick={() => {
