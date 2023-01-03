@@ -1,4 +1,5 @@
 import { useState } from "react";
+import blogService from "../services/blogs";
 
 const CreateBlog = ({ blog }) => {
   const [title, setTitle] = useState("");
@@ -6,9 +7,16 @@ const CreateBlog = ({ blog }) => {
   const [url, setUrl] = useState("");
 
   const submitBlog = (event) => {
-    event.prevent.default();
+    event.preventDefault();
     const blog = { title: title, author: author, url: url };
     console.log(blog);
+
+    blogService.create(blog).then((returnedBlog) => {
+      // setNotes(notes.concat(returnedNote));
+      setAuthor("");
+      setTitle("");
+      setUrl("");
+    });
   };
 
   return (

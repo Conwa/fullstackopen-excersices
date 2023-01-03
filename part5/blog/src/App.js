@@ -1,6 +1,9 @@
 import { useState, useEffect } from "react";
+
 import Blog from "./components/Blog";
 import CreateBlog from "./components/CreateBlog";
+import LoginView from "./components/LoginView";
+
 import blogService from "./services/blogs";
 import loginService from "./services/login";
 
@@ -33,10 +36,36 @@ const App = () => {
       setPassword("");
       setUsername("");
       window.localStorage.setItem("loggedUser", JSON.stringify(user));
+      blogService.setToken(user.token);
+      console.log(user);
     } catch (error) {
       console.log(error);
     }
   };
+
+  // const createBlog = async (BlogToAdd) => {
+  //   try {
+  //     blogFormRef.current.toggleVisibility()
+  //     const createdBlog = await blogService
+  //       .create(BlogToAdd)
+  //     setSuccessMessage(
+  //       `Blog ${BlogToAdd.title} was successfully added`
+  //     )
+  //     setAllBlogs(allBlogs.concat(createdBlog))
+  //     setErrorMessage(null)
+  //     setTimeout(() => {
+  //       setSuccessMessage(null)
+  //     }, 5000)
+  //   } catch(exception) {
+  //     setErrorMessage(
+  //       `Cannot add blog ${BlogToAdd.title}`
+  //     )
+  //     setSuccessMessage(null)
+  //     setTimeout(() => {
+  //       setSuccessMessage(null)
+  //     }, 5000)
+  //   }
+  // }
 
   const loginView = () => (
     <>
@@ -87,7 +116,21 @@ const App = () => {
     </>
   );
 
-  return <div>{user === null ? loginView() : loggedView()}</div>;
+  return (
+    <div>
+      {user === null ? (
+        <LoginView
+          handleLogin={handleLogin}
+          username={username}
+          setUsername={setUsername}
+          password={password}
+          setPassword={setPassword}
+        />
+      ) : (
+        loggedView()
+      )}
+    </div>
+  );
 };
 
 export default App;
