@@ -3,6 +3,7 @@ import { useState, useEffect } from "react";
 import Blog from "./components/Blog";
 import CreateBlog from "./components/CreateBlog";
 import LoginView from "./components/LoginView";
+import LoggedView from "./components/LoggedView";
 
 import blogService from "./services/blogs";
 import loginService from "./services/login";
@@ -100,7 +101,7 @@ const App = () => {
           setPassword={setPassword}
         />
       ) : (
-        loggedView()
+        <LoggedView user={user} setUser={setUser} blogs={blogs} />
       )}
     </div>
   );
