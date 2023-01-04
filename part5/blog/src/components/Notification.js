@@ -1,14 +1,14 @@
-const Notification = (props, { message }) => {
+const Notification = ({ message }) => {
+  console.log(message);
   if (message === null) {
     return null;
   }
-  <>
-    {props.isError === true ? (
-      <h1 className="note">{message}</h1>
-    ) : (
+
+  return (
+    <>
       <h1 className="error">{message}</h1>
-    )}
-  </>;
+    </>
+  );
 };
 
 export default Notification;
