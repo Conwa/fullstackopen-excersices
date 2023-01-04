@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 
-import Blog from "./components/Blog";
-import CreateBlog from "./components/CreateBlog";
+// import Blog from "./components/Blog";
+// import CreateBlog from "./components/CreateBlog";
 import LoginView from "./components/LoginView";
 import LoggedView from "./components/LoggedView";
 
@@ -44,52 +44,6 @@ const App = () => {
     }
   };
 
-  // const createBlog = async (BlogToAdd) => {
-  //   try {
-  //     blogFormRef.current.toggleVisibility()
-  //     const createdBlog = await blogService
-  //       .create(BlogToAdd)
-  //     setSuccessMessage(
-  //       `Blog ${BlogToAdd.title} was successfully added`
-  //     )
-  //     setAllBlogs(allBlogs.concat(createdBlog))
-  //     setErrorMessage(null)
-  //     setTimeout(() => {
-  //       setSuccessMessage(null)
-  //     }, 5000)
-  //   } catch(exception) {
-  //     setErrorMessage(
-  //       `Cannot add blog ${BlogToAdd.title}`
-  //     )
-  //     setSuccessMessage(null)
-  //     setTimeout(() => {
-  //       setSuccessMessage(null)
-  //     }, 5000)
-  //   }
-  // }
-
-  const loggedView = () => (
-    <>
-      <h2>BLOGS</h2>
-      <>
-        <CreateBlog></CreateBlog>
-        <h3>{user.name} logged in</h3>
-        <button
-          onClick={() => {
-            window.localStorage.removeItem("loggedUser");
-            //setUser to trigger useEffect hook
-            setUser(null);
-          }}
-        >
-          log out
-        </button>
-      </>
-      {blogs.map((blog) => (
-        <Blog key={blog.id} blog={blog} />
-      ))}
-    </>
-  );
-
   return (
     <div>
       {user === null ? (
@@ -101,7 +55,12 @@ const App = () => {
           setPassword={setPassword}
         />
       ) : (
-        <LoggedView user={user} setUser={setUser} blogs={blogs} />
+        <LoggedView
+          user={user}
+          setUser={setUser}
+          blogs={blogs}
+          setBlogs={setBlogs}
+        />
       )}
     </div>
   );

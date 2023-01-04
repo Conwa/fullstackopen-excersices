@@ -6,7 +6,11 @@ const LoggedView = (props) => {
     <>
       <h2>BLOGS</h2>
       <>
-        <CreateBlog />
+        <CreateBlog
+          user={props.user}
+          setBlogs={props.setBlogs}
+          blogs={props.blogs}
+        />
         <h3>{props.user.name} logged in</h3>
         <button
           onClick={() => {
