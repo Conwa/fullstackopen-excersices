@@ -1,11 +1,11 @@
-const Notification = ({ message }) => {
+const Notification = ({ message, error }) => {
   if (message === null) {
     return null;
   }
 
   return (
     <>
-      <h1 className="error">{message}</h1>
+      <h1 className={error === true ? "error" : "note"}>{message}</h1>
     </>
   );
 };

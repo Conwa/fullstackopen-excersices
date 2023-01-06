@@ -7,6 +7,7 @@ const CreateBlog = (props) => {
   const [author, setAuthor] = useState("");
   const [url, setUrl] = useState("");
   const [message, setMessage] = useState(null);
+  const [error, setError] = useState(false);
 
   const submitBlog = async (event) => {
     event.preventDefault();
@@ -18,22 +19,25 @@ const CreateBlog = (props) => {
       setAuthor("");
       setTitle("");
       setUrl("");
+      setError(false);
 
-      setMessage(`a new blog ${title} was succesfully added`);
+      setMessage(`a new blog "${title}" was succesfully added`);
       setTimeout(() => {
         setMessage(null);
       }, 5000);
     } catch (error) {
+      setError(true);
       setMessage(error.response.data.error);
       setTimeout(() => {
         setMessage(null);
+        setError(false);
       }, 5000);
     }
   };
 
   return (
     <>
-      <Notification message={message} />
+      <Notification message={message} error={error} />
       <h2>create new</h2>
       <form onSubmit={submitBlog}>
         <div>
