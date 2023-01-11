@@ -1,16 +1,12 @@
 import CreateBlog from "./CreateBlog";
 import Blog from "./Blog";
+import Togglable from "./Togglable";
 
 const LoggedView = (props) => {
   return (
     <>
       <h2>BLOGS</h2>
       <>
-        <CreateBlog
-          user={props.user}
-          setBlogs={props.setBlogs}
-          blogs={props.blogs}
-        />
         <h3>{props.user.name} logged in</h3>
         <button
           onClick={() => {
@@ -21,6 +17,14 @@ const LoggedView = (props) => {
         >
           log out
         </button>
+        <Togglable buttonLabel="Create Note">
+          {" "}
+          <CreateBlog
+            user={props.user}
+            setBlogs={props.setBlogs}
+            blogs={props.blogs}
+          />
+        </Togglable>
       </>
       {props.blogs.map((blog) => (
         <Blog key={blog.id} blog={blog} />
