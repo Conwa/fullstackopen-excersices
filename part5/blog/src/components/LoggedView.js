@@ -17,7 +17,7 @@ const LoggedView = (props) => {
         >
           log out
         </button>
-        <Togglable buttonLabel="Create Note">
+        <Togglable buttonLabel="Open Blog Creator">
           {" "}
           <CreateBlog
             user={props.user}
