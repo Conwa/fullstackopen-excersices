@@ -44,6 +44,10 @@ const App = () => {
     }
   };
 
+  const handleSumLikes = async (blogObject) => {
+    blogService.update(blogObject);
+  };
+
   return (
     <div>
       {user === null ? (
@@ -60,6 +64,7 @@ const App = () => {
           setUser={setUser}
           blogs={blogs}
           setBlogs={setBlogs}
+          handleSumLikes={handleSumLikes}
         />
       )}
     </div>

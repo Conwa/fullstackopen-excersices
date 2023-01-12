@@ -27,7 +27,7 @@ const LoggedView = (props) => {
         </Togglable>
       </>
       {props.blogs.map((blog) => (
-        <Blog key={blog.id} blog={blog} />
+        <Blog key={blog.id} blog={blog} handleSumLikes={props.handleSumLikes} />
       ))}
     </>
   );

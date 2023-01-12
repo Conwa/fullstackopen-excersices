@@ -1,13 +1,17 @@
 import { useState } from "react";
 
-const Blog = ({ blog }) => {
+const Blog = ({ handleSumLikes, blog }) => {
   const [detailed, setDetailed] = useState(false);
-
-  // const hideWhenVisible = { display: visible ? "none" : "" };
-  // const showWhenVisible = { display: visible ? "" : "none" };
+  // const [targetBlog, setTargetBlog] = useState("");
 
   const toggleVisibility = () => {
     setDetailed(!detailed);
+  };
+
+  const handleLikes = () => {
+    const updatedBlog = { ...blog, likes: blog.likes + 1 };
+
+    handleSumLikes(updatedBlog);
   };
 
   const blogStyle = {
@@ -33,7 +37,7 @@ const Blog = ({ blog }) => {
       <div>Author: {blog.author}</div>
       <div>
         Likes: {blog.likes}
-        <button>increase likes</button>
+        <button onClick={handleLikes}>increase likes</button>
       </div>
       <div>Url: {blog.url}</div>
     </div>
