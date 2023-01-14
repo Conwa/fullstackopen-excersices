@@ -45,7 +45,10 @@ const App = () => {
   };
 
   const handleSumLikes = async (blogObject) => {
-    blogService.update(blogObject);
+    const updatedBLog = await blogService.update(blogObject);
+    setBlogs(
+      blogs.map((blog) => (blog.id === blogObject.id ? blogObject : blog))
+    );
   };
 
   return (

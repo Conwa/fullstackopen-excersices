@@ -22,17 +22,14 @@ const create = async (newObject) => {
   return response.data;
 };
 
-const update = async (objectToUpdate) => {
+const update = (objectToUpdate) => {
   const id = objectToUpdate.id;
 
   const blogURl = baseUrl.concat("/").concat(id);
 
-  const config = {
-    headers: { Authorization: token },
-  };
-  const response = await axios.get(blogURl);
-  console.log(response);
-  return response.data;
+  const request = axios.put(blogURl, objectToUpdate);
+
+  return request.then((response) => response.data);
 };
 
 // eslint-disable-next-line import/no-anonymous-default-export
