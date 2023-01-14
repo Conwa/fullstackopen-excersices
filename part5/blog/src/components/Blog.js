@@ -14,6 +14,11 @@ const Blog = ({ handleSumLikes, blog }) => {
     handleSumLikes(updatedBlog);
   };
 
+  const handleDelete = () => {
+    // deleteBlog(blog.id)
+    console.log(blog.id);
+  };
+
   const blogStyle = {
     paddingTop: 10,
     paddingLeft: 2,
@@ -40,6 +45,9 @@ const Blog = ({ handleSumLikes, blog }) => {
         <button onClick={handleLikes}>increase likes</button>
       </div>
       <div>Url: {blog.url}</div>
+      <div>
+        <button onClick={handleDelete}>remove blog</button>
+      </div>
     </div>
   );
 };

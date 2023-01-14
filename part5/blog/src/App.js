@@ -14,8 +14,18 @@ const App = () => {
   const [password, setPassword] = useState("");
   const [user, setUser] = useState(null);
 
+  //didn´t know if the sorting had to be done by most to least likes
+  //or viceversa
   useEffect(() => {
-    blogService.getAll().then((blogs) => setBlogs(blogs));
+    blogService
+      .getAll()
+      .then((blogs) =>
+        setBlogs(
+          [...blogs].sort(
+            (prevBlog, nextBlog) => prevBlog.likes - nextBlog.likes
+          )
+        )
+      );
   }, []);
 
   useEffect(() => {
