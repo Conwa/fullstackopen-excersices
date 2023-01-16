@@ -84,11 +84,10 @@ blogsRouter.delete("/:id", async (request, response, next) => {
 
   const user = request.user;
 
-  // console.log(blog.user.toString() === user.id.toString());
-
-  if (blog.user.toString() !== user.id.toString()) {
+  if (blog.user.toString() !== user._id.toString()) {
     return response.status(401).json({ error: "id's not matching" });
   }
+
   //needed to erase empty blogs references before the introduction of
   //the filter method
   // user.blogs.splice(0);

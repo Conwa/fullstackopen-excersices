@@ -1,8 +1,7 @@
 import { useState } from "react";
 
-const Blog = ({ handleSumLikes, blog }) => {
+const Blog = ({ handleDelete, handleSumLikes, blog }) => {
   const [detailed, setDetailed] = useState(false);
-  // const [targetBlog, setTargetBlog] = useState("");
 
   const toggleVisibility = () => {
     setDetailed(!detailed);
@@ -10,13 +9,12 @@ const Blog = ({ handleSumLikes, blog }) => {
 
   const handleLikes = () => {
     const updatedBlog = { ...blog, likes: blog.likes + 1 };
-
+    console.log(handleSumLikes);
     handleSumLikes(updatedBlog);
   };
 
-  const handleDelete = () => {
-    // deleteBlog(blog.id)
-    console.log(blog.id);
+  const deleteBlog = () => {
+    handleDelete(blog);
   };
 
   const blogStyle = {
@@ -46,7 +44,7 @@ const Blog = ({ handleSumLikes, blog }) => {
       </div>
       <div>Url: {blog.url}</div>
       <div>
-        <button onClick={handleDelete}>remove blog</button>
+        <button onClick={deleteBlog}>remove blog</button>
       </div>
     </div>
   );

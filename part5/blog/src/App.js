@@ -61,6 +61,20 @@ const App = () => {
     );
   };
 
+  //MISSING FEATURE
+  //Show the button for deleting a blog post only if the blog post was added by the user.
+
+  const handleDelete = async (blogObject) => {
+    const message = `Delete ${blogObject.title} by ${blogObject.author}?`;
+
+    if (window.confirm(message)) {
+      await blogService.deletion(blogObject);
+
+      const filteredBlogs = blogs.filter((blog) => blog.id !== blogObject.id);
+      setBlogs(filteredBlogs);
+    }
+  };
+
   return (
     <div>
       {user === null ? (
@@ -78,6 +92,7 @@ const App = () => {
           blogs={blogs}
           setBlogs={setBlogs}
           handleSumLikes={handleSumLikes}
+          handleDelete={handleDelete}
         />
       )}
     </div>
