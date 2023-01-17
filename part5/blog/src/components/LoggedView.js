@@ -32,6 +32,7 @@ const LoggedView = (props) => {
           blog={blog}
           handleSumLikes={props.handleSumLikes}
           handleDelete={props.handleDelete}
+          user={props.user}
         />
       ))}
     </>

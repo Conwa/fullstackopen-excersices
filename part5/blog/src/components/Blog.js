@@ -1,15 +1,21 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
-const Blog = ({ handleDelete, handleSumLikes, blog }) => {
+const Blog = ({ handleDelete, handleSumLikes, blog, user }) => {
   const [detailed, setDetailed] = useState(false);
+  const [isOwner, setOwner] = useState(false);
 
+  useEffect(() => {
+    if (blog.user.username === user.username) {
+      setOwner(true);
+    }
+  }, []);
   const toggleVisibility = () => {
     setDetailed(!detailed);
   };
 
   const handleLikes = () => {
     const updatedBlog = { ...blog, likes: blog.likes + 1 };
-    console.log(handleSumLikes);
+
     handleSumLikes(updatedBlog);
   };
 
@@ -43,9 +49,7 @@ const Blog = ({ handleDelete, handleSumLikes, blog }) => {
         <button onClick={handleLikes}>increase likes</button>
       </div>
       <div>Url: {blog.url}</div>
-      <div>
-        <button onClick={deleteBlog}>remove blog</button>
-      </div>
+      <div>{isOwner && <button onClick={deleteBlog}>remove blog</button>}</div>
     </div>
   );
 };
