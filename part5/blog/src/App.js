@@ -1,9 +1,9 @@
-import { useState, useEffect } from "react";
+import { useEffect, useState } from "react";
 
 // import Blog from "./components/Blog";
 // import CreateBlog from "./components/CreateBlog";
-import LoginView from "./components/LoginView";
 import LoggedView from "./components/LoggedView";
+import LoginView from "./components/LoginView";
 
 import blogService from "./services/blogs";
 import loginService from "./services/login";

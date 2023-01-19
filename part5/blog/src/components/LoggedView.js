@@ -1,5 +1,5 @@
-import CreateBlog from "./CreateBlog";
 import Blog from "./Blog";
+import CreateBlog from "./CreateBlog";
 import Togglable from "./Togglable";
 
 const LoggedView = (props) => {
