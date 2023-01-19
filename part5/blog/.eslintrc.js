@@ -20,12 +20,14 @@ module.exports = {
     quotes: ["error", "double"],
     semi: [1, "always"],
     eqeqeq: "error",
-    "no-trailing-spaces": "error",
+    "no-trailing-spaces": ["error"],
+    //OPCIONAL PARA LOS ESPACIOS:  { skipBlankLines: true }
     "object-curly-spacing": ["error", "always"],
     "arrow-spacing": ["error", { before: true, after: true }],
     "no-console": 0,
     "react/prop-types": 0,
     "react/react-in-jsx-scope": "off",
+    "no-unused-vars": "error",
   },
   settings: {
     react: {

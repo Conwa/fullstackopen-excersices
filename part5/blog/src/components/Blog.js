@@ -1,6 +1,14 @@
+import PropTypes from "prop-types";
 import { useEffect, useState } from "react";
 
 const Blog = ({ handleDelete, handleSumLikes, blog, user }) => {
+  Blog.propTypes = {
+    handleDelete: PropTypes.func.isRequired,
+    handleSumLikes: PropTypes.func.isRequired,
+    blog: PropTypes.object.isRequired,
+    user: PropTypes.object.isRequired,
+  };
+
   const [detailed, setDetailed] = useState(false);
   const [isOwner, setOwner] = useState(false);
 
