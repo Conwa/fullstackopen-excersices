@@ -1,14 +1,14 @@
-import { useState, useEffect } from "react";
+import { useEffect, useState } from "react";
 
-import Note from "./components/Note";
-import Notification from "./components/Notification";
-import LoginForm from "./components/LoginForm";
 import Footer from "./components/Footer";
-import Togglable from "./components/Togglable";
+import LoginForm from "./components/LoginForm";
+import Note from "./components/Note";
 import NoteForm from "./components/NoteForm";
+import Notification from "./components/Notification";
+import Togglable from "./components/Togglable";
 
-import noteService from "./services/notes";
 import loginService from "./services/login";
+import noteService from "./services/notes";
 
 const App = () => {
   const [notes, setNotes] = useState([]);
@@ -62,7 +62,7 @@ const App = () => {
       .then((returnedNote) => {
         setNotes(notes.map((note) => (note.id !== id ? note : returnedNote)));
       })
-      .catch((error) => {
+      .catch(() => {
         setErrorMessage(
           `Note '${note.content}' was already removed from server`
         );
