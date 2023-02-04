@@ -1,12 +1,10 @@
-import { useEffect, useState } from "react";
-
+import { useEffect, useRef, useState } from "react";
 import Footer from "./components/Footer";
 import LoginForm from "./components/LoginForm";
 import Note from "./components/Note";
 import NoteForm from "./components/NoteForm";
 import Notification from "./components/Notification";
 import Togglable from "./components/Togglable";
-
 import loginService from "./services/login";
 import noteService from "./services/notes";
 
@@ -14,6 +12,7 @@ const App = () => {
   const [notes, setNotes] = useState([]);
   const [showAll, setShowAll] = useState(true);
   const [errorMessage, setErrorMessage] = useState(null);
+
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [user, setUser] = useState(null);
@@ -33,6 +32,8 @@ const App = () => {
     }
   }, []);
 
+  const noteFormRef = useRef();
+
   const handleLogin = async (event) => {
     event.preventDefault();
     try {
@@ -40,9 +41,9 @@ const App = () => {
         username,
         password,
       });
-      setUser(user);
       noteService.setToken(user.token);
       window.localStorage.setItem("loggedNoteappUser", JSON.stringify(user));
+      setUser(user);
       setUsername("");
       setPassword("");
     } catch (exception) {
@@ -52,6 +53,15 @@ const App = () => {
       }, 5000);
     }
   };
+
+  const addNote = (noteObject) => {
+    noteService.create(noteObject).then((returnedNote) => {
+      setNotes(notes.concat(returnedNote));
+      noteFormRef.current.toggleVisibility();
+    });
+  };
+
+  const notesToShow = showAll ? notes : notes.filter((note) => note.important);
 
   const toggleImportanceOf = (id) => {
     const note = notes.find((n) => n.id === id);
@@ -73,21 +83,14 @@ const App = () => {
       });
   };
 
-  const addNote = (noteObject) => {
-    noteService.create(noteObject).then((returnedNote) => {
-      setNotes(notes.concat(returnedNote));
-    });
-  };
-
-  const notesToShow = showAll ? notes : notes.filter((note) => note.important);
-
   return (
     <div>
-      <h1>Notes</h1>
+      <h1>Notes app</h1>
+
       <Notification message={errorMessage} />
 
-      {user === null ? (
-        <Togglable buttonLabel="login">
+      {!user && (
+        <Togglable buttonLabel="log in">
           <LoginForm
             username={username}
             password={password}
@@ -96,10 +99,11 @@ const App = () => {
             handleSubmit={handleLogin}
           />
         </Togglable>
-      ) : (
+      )}
+      {user && (
         <div>
           <p>{user.name} logged in</p>
-          <Togglable buttonLabel="new note">
+          <Togglable buttonLabel="new note" ref={noteFormRef}>
             <NoteForm createNote={addNote} />
           </Togglable>
         </div>
