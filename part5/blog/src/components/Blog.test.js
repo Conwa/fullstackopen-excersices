@@ -18,4 +18,12 @@ test("renders minimized content", () => {
 
   const element = screen.getByText("test green message", { exact: false });
   expect(element).toBeDefined();
+
+  const minifiedVersion = document.querySelector(".minifiedVersion");
+  const maxifiedVersion = document.querySelector(".maxifiedVersion");
+
+  expect(minifiedVersion).not.toBeNull();
+  expect(maxifiedVersion).toBeNull();
+
+  screen.debug(element);
 });

@@ -40,14 +40,14 @@ const Blog = ({ handleDelete, handleSumLikes, blog, user }) => {
   };
   if (detailed === false) {
     return (
-      <div style={blogStyle}>
+      <div style={blogStyle} className="minifiedVersion">
         {blog.title} {blog.author}{" "}
         <button onClick={toggleVisibility}>show details</button>{" "}
       </div>
     );
   }
   return (
-    <div style={blogStyle}>
+    <div style={blogStyle} className="maxifiedVersion">
       <div>
         Title: {blog.title} <button onClick={toggleVisibility}>minimize</button>
       </div>
