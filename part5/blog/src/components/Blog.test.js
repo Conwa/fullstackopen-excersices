@@ -4,26 +4,46 @@ import React from "react";
 
 import Blog from "./Blog";
 
-test("renders minimized content", () => {
-  const blog = {
-    url: "use conditional rendering in the class",
-    title: "test green message",
-    author: "hope it works",
-    user: "{id: '6398c7bb8a962cdb05fe176e', name: 'Conrado', u…}",
-    likes: 1,
-    id: "63b8977afd3eab643e79c0c8",
-  };
+describe("<Blog/>", () => {
+  let container;
 
-  render(<Blog blog={blog} user={blog.user} />);
+  beforeEach(() => {
+    const blog = {
+      url: "use conditional rendering in the class",
+      title: "test green message",
+      author: "hope it works",
+      user: "{id: '6398c7bb8a962cdb05fe176e', name: 'Conrado', u…}",
+      likes: 1,
+      id: "63b8977afd3eab643e79c0c8",
+    };
+    container = render(<Blog blog={blog} user={blog.user} />).container;
+  });
 
-  const element = screen.getByText("test green message", { exact: false });
-  expect(element).toBeDefined();
+  test("renders minimized content", () => {
+    const element = screen.getByText("test green message", { exact: false });
+    expect(element).toBeDefined();
 
-  const minifiedVersion = document.querySelector(".minifiedVersion");
-  const maxifiedVersion = document.querySelector(".maxifiedVersion");
+    const minifiedVersion = container.querySelector(".minifiedVersion");
+    const maxifiedVersion = document.querySelector(".maxifiedVersion");
 
-  expect(minifiedVersion).not.toBeNull();
-  expect(maxifiedVersion).toBeNull();
+    expect(minifiedVersion).not.toBeNull();
+    expect(maxifiedVersion).toBeNull();
 
-  screen.debug(element);
+    //alternate practice method of testing via the search of a class
+    expect(element).toHaveClass("minifiedVersion");
+
+    screen.debug(element);
+  });
 });
+
+// test("change of class after user click", () => {
+//   const blog = {
+//     url: "use conditional rendering in the class",
+//     title: "test green message",
+//     author: "hope it works",
+//     user: "{id: '6398c7bb8a962cdb05fe176e', name: 'Conrado', u…}",
+//     likes: 1,
+//     id: "63b8977afd3eab643e79c0c8",
+//   };
+//   render(<Blog blog={blog} user={blog.user} />);
+// });
