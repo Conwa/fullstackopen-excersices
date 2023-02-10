@@ -23,6 +23,7 @@ describe("<Blog/>", () => {
     const element = screen.getByText("test green message", { exact: false });
     expect(element).toBeDefined();
 
+    //first try of searching by className
     const minifiedVersion = container.querySelector(".minifiedVersion");
     const maxifiedVersion = document.querySelector(".maxifiedVersion");
 
@@ -31,19 +32,7 @@ describe("<Blog/>", () => {
 
     //alternate practice method of testing via the search of a class
     expect(element).toHaveClass("minifiedVersion");
-
-    screen.debug(element);
   });
-});
 
-// test("change of class after user click", () => {
-//   const blog = {
-//     url: "use conditional rendering in the class",
-//     title: "test green message",
-//     author: "hope it works",
-//     user: "{id: '6398c7bb8a962cdb05fe176e', name: 'Conrado', u…}",
-//     likes: 1,
-//     id: "63b8977afd3eab643e79c0c8",
-//   };
-//   render(<Blog blog={blog} user={blog.user} />);
-// });
+  test("change of class after user click", () => {});
+});
