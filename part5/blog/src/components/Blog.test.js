@@ -1,5 +1,6 @@
 import "@testing-library/jest-dom/extend-expect";
 import { render, screen } from "@testing-library/react";
+import userEvent from "@testing-library/user-event";
 import React from "react";
 
 import Blog from "./Blog";
@@ -7,6 +8,7 @@ import Blog from "./Blog";
 describe("<Blog/>", () => {
   let container;
 
+  const mockFunction = () => {};
   beforeEach(() => {
     const blog = {
       url: "use conditional rendering in the class",
@@ -16,16 +18,25 @@ describe("<Blog/>", () => {
       likes: 1,
       id: "63b8977afd3eab643e79c0c8",
     };
-    container = render(<Blog blog={blog} user={blog.user} />).container;
+    container = render(
+      <Blog
+        blog={blog}
+        user={blog.user}
+        handleDelete={mockFunction}
+        handleSumLikes={mockFunction}
+      />
+    ).container;
   });
 
   test("renders minimized content", () => {
-    const element = screen.getByText("test green message", { exact: false });
+    const element = screen.getByText("test green message", {
+      exact: false,
+    });
     expect(element).toBeDefined();
 
     //first try of searching by className
     const minifiedVersion = container.querySelector(".minifiedVersion");
-    const maxifiedVersion = document.querySelector(".maxifiedVersion");
+    const maxifiedVersion = container.querySelector(".maxifiedVersion");
 
     expect(minifiedVersion).not.toBeNull();
     expect(maxifiedVersion).toBeNull();
@@ -34,5 +45,21 @@ describe("<Blog/>", () => {
     expect(element).toHaveClass("minifiedVersion");
   });
 
-  test("change of class after user click", () => {});
+  test("change of class after user click", async () => {
+    const user = userEvent.setup();
+    const button = screen.getByText("show details");
+
+    const element = screen.getByText("test green message", {
+      exact: false,
+    });
+    expect(element).toBeDefined();
+
+    expect(element).toHaveClass("minifiedVersion");
+
+    await user.click(button);
+
+    expect(element).toHaveClass("maxifiedVersion");
+
+    screen.debug(element);
+  });
 });
