@@ -43,6 +43,7 @@ const CreateBlog = (props) => {
         <div>
           title:
           <input
+            id="title-input"
             type="text"
             value={title}
             name="title"
@@ -52,6 +53,7 @@ const CreateBlog = (props) => {
         <div>
           author:
           <input
+            id="author-input"
             type="text"
             value={author}
             name="author"
@@ -61,6 +63,7 @@ const CreateBlog = (props) => {
         <div>
           url:
           <input
+            id="url-input"
             type="text"
             value={url}
             name="url"
