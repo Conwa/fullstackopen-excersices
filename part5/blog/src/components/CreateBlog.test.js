@@ -1,6 +1,5 @@
 import "@testing-library/jest-dom/extend-expect";
 import { fireEvent, render, screen } from "@testing-library/react";
-import userEvent from "@testing-library/user-event";
 import React from "react";
 
 import CreateBlog from "./CreateBlog";
@@ -15,8 +14,6 @@ describe("<CreateBlog/>", () => {
   });
 
   test("render blog form", async () => {
-    let user = userEvent.setup();
-
     let submitForm = screen.getByText("submit blog", { exact: false });
 
     let titleInput = container.querySelector("#title-input");
