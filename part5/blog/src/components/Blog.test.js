@@ -7,23 +7,24 @@ import Blog from "./Blog";
 
 describe("<Blog/>", () => {
   let container;
+  const blog = {
+    url: "use conditional rendering in the class",
+    title: "test green message",
+    author: "hope it works",
+    user: "{id: '6398c7bb8a962cdb05fe176e', name: 'Conrado', u…}",
+    likes: 1,
+    id: "63b8977afd3eab643e79c0c8",
+  };
 
-  const mockFunction = () => {};
+  const mockHandler = jest.fn();
+
   beforeEach(() => {
-    const blog = {
-      url: "use conditional rendering in the class",
-      title: "test green message",
-      author: "hope it works",
-      user: "{id: '6398c7bb8a962cdb05fe176e', name: 'Conrado', u…}",
-      likes: 1,
-      id: "63b8977afd3eab643e79c0c8",
-    };
     container = render(
       <Blog
         blog={blog}
         user={blog.user}
-        handleDelete={mockFunction}
-        handleSumLikes={mockFunction}
+        handleDelete={mockHandler}
+        handleSumLikes={mockHandler}
       />
     ).container;
   });
@@ -60,6 +61,19 @@ describe("<Blog/>", () => {
 
     expect(element).toHaveClass("maxifiedVersion");
 
-    screen.debug(element);
+    //screen.debug(element);
+  });
+
+  test("two click means two more likes", async () => {
+    const user = userEvent.setup();
+
+    const detailsButton = screen.getByText("show details");
+    await user.click(detailsButton);
+
+    const likesButton = screen.getByText("increase likes", { exact: false });
+    await user.click(likesButton);
+    await user.click(likesButton);
+
+    expect(mockHandler.mock.calls).toHaveLength(2);
   });
 });
