@@ -34,7 +34,6 @@ const App = () => {
       const user = JSON.parse(loggedUserJSON);
       setUser(user);
       blogService.setToken(user.token);
-      console.log(user.token);
     }
   }, []);
 
@@ -49,7 +48,6 @@ const App = () => {
       setUsername("");
       window.localStorage.setItem("loggedUser", JSON.stringify(user));
       blogService.setToken(user.token);
-      console.log(user);
     } catch (error) {
       console.log(error);
     }

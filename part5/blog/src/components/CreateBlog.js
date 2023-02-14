@@ -39,7 +39,7 @@ const CreateBlog = (props) => {
     <>
       <Notification message={message} error={error} />
       <h2>create new</h2>
-      <form onSubmit={submitBlog}>
+      <form id="form" onSubmit={submitBlog}>
         <div>
           title:
           <input
@@ -70,7 +70,9 @@ const CreateBlog = (props) => {
             onChange={({ target }) => setUrl(target.value)}
           ></input>
         </div>
-        <button type="submit">submit blog</button>
+        <button id="submit-button" type="submit">
+          submit blog
+        </button>
       </form>
     </>
   );
