@@ -12,7 +12,7 @@ const CreateBlog = (props) => {
   const submitBlog = async (event) => {
     event.preventDefault();
     const submittedBlog = { title: title, author: author, url: url };
-    blogService.setToken(props.user.token);
+
     try {
       const addedBlog = await blogService.create(submittedBlog);
       props.setBlogs(props.blogs.concat(addedBlog));

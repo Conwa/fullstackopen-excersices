@@ -33,7 +33,8 @@ const App = () => {
     if (loggedUserJSON) {
       const user = JSON.parse(loggedUserJSON);
       setUser(user);
-      // noteService.setToken(user.token);
+      blogService.setToken(user.token);
+      console.log(user.token);
     }
   }, []);
 
