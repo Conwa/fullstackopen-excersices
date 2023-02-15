@@ -8,6 +8,7 @@ require("express-async-errors");
 const notesRouter = require("./controllers/notes");
 const usersRouter = require("./controllers/users");
 const loginRouter = require("./controllers/login");
+const testingRouter = require("./controllers/testing");
 const middleware = require("./utils/middleware");
 const logger = require("./utils/logger");
 
@@ -30,6 +31,11 @@ app.use(middleware.requestLogger);
 app.use("/api/login", loginRouter);
 app.use("/api/notes", notesRouter);
 app.use("/api/users", usersRouter);
+
+if (process.env.NODE_ENV === "test") {
+  const testingRouter = require("./controllers/testing");
+  app.use("/api/testing", testingRouter);
+}
 
 app.use(middleware.unknownEndpoint);
 app.use(middleware.errorHandler);

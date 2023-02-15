@@ -10,8 +10,8 @@
     "build:ui": "rimraf ./build && cd D:/Proyectos/fullstackopen-excersices/part2/notes && npm run build",
     "logs:prod": "flyctl logs",
     "lint": "eslint .",
-    "test": "cross-env NODE_ENV=test jest --verbose --runInBand --forceExit",
-    "start:test": "NODE_ENV=test node index.js"
+    "test": "jest --verbose --runInBand",
+    "start:test": "cross-env NODE_ENV=test node index.js"
   },
   "author": "",
   "license": "ISC",
