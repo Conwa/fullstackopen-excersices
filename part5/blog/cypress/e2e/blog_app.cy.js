@@ -13,4 +13,11 @@ describe("Blog App", () => {
   it("shows login by default", function () {
     cy.contains("login to application");
   });
+  it("fails on wrong credentials", function () {
+    cy.get("#username-input").type("rootUser");
+    cy.get("#password-input").type("12345");
+    cy.get("#login-button").click();
+
+    cy.contains("Conrado Del Carlo logged in");
+  });
 });
