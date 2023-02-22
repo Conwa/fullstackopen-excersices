@@ -21,3 +21,5 @@ describe("Blog App", () => {
     cy.contains("Conrado Del Carlo logged in");
   });
 });
+
+//Hacer que salga cartel para cuando el login no es correcto
