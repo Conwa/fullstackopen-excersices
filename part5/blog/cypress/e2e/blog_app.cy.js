@@ -1,13 +1,13 @@
 describe("Blog App", () => {
   beforeEach(function () {
     cy.visit("");
-    cy.request("POST", "http://localhost:3001/api/testing/reset");
-    // const user = {
-    //   name: "Matti Luukkainen",
-    //   username: "mluukkai",
-    //   password: "salainen",
-    // };
-    // cy.request("POST", "http://localhost:3001/api/users/", user);
+    cy.request("POST", `${Cypress.env("BACKEND")}/testing/reset`);
+    const user = {
+      name: "Conrado Del Carlo",
+      username: "rootUser",
+      passwordHash: "12345",
+    };
+    cy.request("POST", `${Cypress.env("BACKEND")}/users`, user);
   });
 
   it("shows login by default", function () {
