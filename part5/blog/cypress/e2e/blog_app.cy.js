@@ -127,6 +127,12 @@ describe("Blog App", () => {
         likes: "2",
         url: "testurl.com",
       });
+
+      cy.contains("log out").click;
+      cy.login({ username: "otherUser", password: "12345" });
+
+      cy.contains("show details").click();
+      cy.contains("remove blog").should("not.exist");
     });
   });
 });
