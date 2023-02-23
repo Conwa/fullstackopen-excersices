@@ -16,13 +16,14 @@ const App = () => {
 
   //didn´t know if the sorting had to be done by most to least likes
   //or viceversa
+  //solved doubt on 5.23 exersice
   useEffect(() => {
     blogService
       .getAll()
       .then((blogs) =>
         setBlogs(
           [...blogs].sort(
-            (prevBlog, nextBlog) => prevBlog.likes - nextBlog.likes
+            (prevBlog, nextBlog) => nextBlog.likes - prevBlog.likes
           )
         )
       );

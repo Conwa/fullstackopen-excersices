@@ -53,20 +53,18 @@ describe("Blog App", () => {
       cy.get("#url-input").type("testurl.com");
       cy.get("#submit-button").click();
 
+      cy.contains("show details").click();
+
       cy.get("#notification-message").contains(
         `a new blog "${message}" was succesfully added`
       );
-
-      //this solves problem where the person that created the blog
-      //cant delete it right away althought its the owner, when the page is reloaded
-      //it resolves
-      // cy.visit("");
     });
 
     it("blog created can then be liked", function () {
       cy.createBlog({
         title: "test",
         author: "testAuthor",
+        likes: "2",
         url: "testurl.com",
       });
 
@@ -86,6 +84,29 @@ describe("Blog App", () => {
       cy.contains("remove blog").click();
 
       cy.contains("blog to delete").should("not.exist");
+    });
+
+    describe.only("when there are multiple blogs", function () {
+      it("orders them by most likes first", function () {
+        cy.createBlog({
+          title: "blog1",
+          author: "testAuthor",
+          likes: "1",
+          url: "testurl.com",
+        });
+        cy.createBlog({
+          title: "blog2",
+          author: "testAuthor",
+          likes: "2",
+          url: "testurl.com",
+        });
+
+        cy.get(".blog").eq(0).contains("show details").click();
+        cy.get(".blog").eq(0).should("contain", "Likes: 2");
+
+        cy.get(".blog").eq(1).contains("show details").click();
+        cy.get(".blog").eq(1).should("contain", "Likes: 1");
+      });
     });
   });
 });
