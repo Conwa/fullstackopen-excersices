@@ -85,27 +85,47 @@ describe("Blog App", () => {
 
       cy.contains("blog to delete").should("not.exist");
     });
+  });
 
-    describe.only("when there are multiple blogs", function () {
-      it("orders them by most likes first", function () {
-        cy.createBlog({
-          title: "blog1",
-          author: "testAuthor",
-          likes: "1",
-          url: "testurl.com",
-        });
-        cy.createBlog({
-          title: "blog2",
-          author: "testAuthor",
-          likes: "2",
-          url: "testurl.com",
-        });
+  describe("when there are multiple blogs", function () {
+    it("orders them by most likes first", function () {
+      cy.createBlog({
+        title: "blog1",
+        author: "testAuthor",
+        likes: "1",
+        url: "testurl.com",
+      });
+      cy.createBlog({
+        title: "blog2",
+        author: "testAuthor",
+        likes: "2",
+        url: "testurl.com",
+      });
 
-        cy.get(".blog").eq(0).contains("show details").click();
-        cy.get(".blog").eq(0).should("contain", "Likes: 2");
+      cy.get(".blog").eq(0).contains("show details").click();
+      cy.get(".blog").eq(0).should("contain", "Likes: 2");
 
-        cy.get(".blog").eq(1).contains("show details").click();
-        cy.get(".blog").eq(1).should("contain", "Likes: 1");
+      cy.get(".blog").eq(1).contains("show details").click();
+      cy.get(".blog").eq(1).should("contain", "Likes: 1");
+    });
+  });
+
+  describe.only("when its not blog owner", function () {
+    it("user cant delete the blog", function () {
+      const otherUser = {
+        name: "other User",
+        username: "otherUser",
+        passwordHash: "12345",
+      };
+      cy.request("POST", `${Cypress.env("BACKEND")}/users`, otherUser);
+
+      cy.login({ username: "rootUser", password: "12345" });
+
+      cy.createBlog({
+        title: "test",
+        author: "rootUser authorship",
+        likes: "2",
+        url: "testurl.com",
       });
     });
   });
