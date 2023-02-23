@@ -39,3 +39,15 @@ Cypress.Commands.add("createBlog", ({ title, author, url, likes = "0" }) => {
 
   cy.visit("");
 });
+
+// FALTA TERMINAR
+Cypress.Commands.add("login", (username, password) => {
+  cy.request({
+    url: `${Cypress.env("BACKEND")}/login`,
+    method: "POST",
+    body: JSON.parse({ username: username, password: password }),
+  }).then((response) => {
+    localStorage.setItem("loggedUser", JSON.stringify(response.body));
+    cy.visit("");
+  });
+});
