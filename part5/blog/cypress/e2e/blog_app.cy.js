@@ -33,9 +33,14 @@ describe("Blog App", () => {
 
   describe("When logged in", function () {
     beforeEach(function () {
-      cy.get("#username-input").type("rootUser");
-      cy.get("#password-input").type("12345");
-      cy.get("#login-button").click();
+      //tryed the not user method
+      cy.request("POST", "http://localhost:3001/api/login", {
+        username: "rootUser",
+        password: "12345",
+      }).then((response) => {
+        localStorage.setItem("loggedUser", JSON.stringify(response.body));
+        cy.visit("");
+      });
     });
 
     it("a blog can be created", function () {
@@ -56,6 +61,18 @@ describe("Blog App", () => {
       //cant delete it right away althought its the owner, when the page is reloaded
       //it resolves
       // cy.visit("");
+    });
+
+    it("blog created can then be liked", function () {
+      cy.createBlog({
+        title: "test",
+        author: "testAuthor",
+        url: "testurl.com",
+      });
+
+      cy.contains("show details").click();
+      cy.contains("increase likes").click();
+      cy.contains("Likes: 1");
     });
   });
 });
