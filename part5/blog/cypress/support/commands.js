@@ -1,3 +1,4 @@
+/* eslint-disable linebreak-style */
 // ***********************************************
 // This example commands.js shows you how to
 // create various custom commands and overwrite
@@ -23,3 +24,18 @@
 //
 // -- This will overwrite an existing command --
 // Cypress.Commands.overwrite('visit', (originalFn, url, options) => { ... })
+
+Cypress.Commands.add("createBlog", ({ title, author, url }) => {
+  cy.request({
+    url: `${Cypress.env("BACKEND")}/blogs`,
+    method: "POST",
+    body: { title, author, url },
+    headers: {
+      Authorization: `bearer ${
+        JSON.parse(localStorage.getItem("loggedNoteappUser")).token
+      }`,
+    },
+  });
+
+  cy.visit("");
+});

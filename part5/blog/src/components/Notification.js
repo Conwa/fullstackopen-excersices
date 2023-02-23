@@ -5,7 +5,12 @@ const Notification = ({ message, error }) => {
 
   return (
     <>
-      <h1 className={error === true ? "error" : "note"}>{message}</h1>
+      <h1
+        id="notification-message"
+        className={error === true ? "error" : "note"}
+      >
+        {message}
+      </h1>
     </>
   );
 };
