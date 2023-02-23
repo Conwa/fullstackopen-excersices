@@ -10,15 +10,25 @@ describe("Blog App", () => {
     cy.request("POST", `${Cypress.env("BACKEND")}/users`, user);
   });
 
-  it("shows login by default", function () {
+  it("shows loginView by default", function () {
     cy.contains("login to application");
   });
-  it("fails on wrong credentials", function () {
-    cy.get("#username-input").type("rootUser");
-    cy.get("#password-input").type("12345");
-    cy.get("#login-button").click();
 
-    cy.contains("Conrado Del Carlo logged in");
+  describe("Login function", function () {
+    it("logs in with correct credentials", function () {
+      cy.get("#username-input").type("rootUser");
+      cy.get("#password-input").type("12345");
+      cy.get("#login-button").click();
+
+      cy.contains("Conrado Del Carlo logged in");
+    });
+    it("fails to enter with wrong credentials", function () {
+      cy.get("#username-input").type("wrongUser");
+      cy.get("#password-input").type("123456");
+      cy.get("#login-button").click();
+
+      cy.contains("Conrado Del Carlo logged in").should("not.exist");
+    });
   });
 });
 
