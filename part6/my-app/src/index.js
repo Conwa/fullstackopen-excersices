@@ -6,7 +6,10 @@ import { createStore } from "redux";
 import App from "./App";
 import noteReducer from "./reducers/noteReducer";
 
-const store = createStore(noteReducer);
+const store = createStore(
+  noteReducer,
+  window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
+);
 
 ReactDOM.createRoot(document.getElementById("root")).render(
   <Provider store={store}>
