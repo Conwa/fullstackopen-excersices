@@ -6,10 +6,6 @@ const Anecdotes = () => {
   const anecdotes = useSelector((state) => state);
   const dispatch = useDispatch();
 
-  const vote = (id) => {
-    console.log("vote", id);
-  };
-
   return (
     <>
       <h2>Anecdotes</h2>
