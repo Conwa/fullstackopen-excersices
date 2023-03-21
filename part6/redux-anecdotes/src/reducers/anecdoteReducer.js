@@ -24,6 +24,10 @@ const anecdoteReducer = (state = initialState, action) => {
   console.log("action", action);
 
   switch (action.type) {
+    case "NEW_ANECDOTE":
+      const newAnecdote = action.payload.anecdote;
+      return [...state, newAnecdote];
+
     case "VOTE":
       const id = action.payload.id;
       const anecdoteToChange = state.find((el) => el.id === id);
@@ -37,6 +41,11 @@ const anecdoteReducer = (state = initialState, action) => {
     default:
       return state;
   }
+};
+
+export const newAnecdote = (text) => {
+  const anecdote = asObject(text);
+  return { type: "NEW_ANECDOTE", payload: { anecdote } };
 };
 
 export const voteAnecdote = (id) => {
