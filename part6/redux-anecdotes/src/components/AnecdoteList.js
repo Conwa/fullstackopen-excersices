@@ -3,11 +3,15 @@ import { useDispatch, useSelector } from "react-redux";
 import { voteAnecdote } from "../reducers/anecdoteReducer";
 
 const AnecdoteList = () => {
-  // const anecdotes = useSelector((state) => state.anecdote);
-
-  const anecdotes = useSelector((state) => {
-    console.log(state);
-    return state.anecdote;
+  const anecdotes = useSelector(({ anecdote, filter }) => {
+    if (filter === "ALL") {
+      return anecdote;
+    }
+    const filteredAnecdotes = anecdote.filter(
+      (anecdote) =>
+        anecdote.content.toLowerCase().indexOf(filter.toLowerCase()) !== -1
+    );
+    return filteredAnecdotes;
   });
 
   const dispatch = useDispatch();

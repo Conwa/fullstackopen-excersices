@@ -11,7 +11,7 @@ module.exports = {
   },
   plugins: ["react"],
   rules: {
-    indent: ["warn", 2],
+    // indent: ["warn", "tab"],
     "linebreak-style": ["error", "windows"],
     quotes: ["error", "double"],
     semi: [1, "always"],
@@ -22,6 +22,7 @@ module.exports = {
     "no-console": 0,
     "react/prop-types": 0,
     "react/react-in-jsx-scope": "off",
+    "no-unused-vars": "warn",
   },
   settings: {
     react: {
