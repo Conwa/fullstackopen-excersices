@@ -1,19 +1,19 @@
+import { configureStore } from "@reduxjs/toolkit";
 import React from "react";
 import ReactDOM from "react-dom/client";
 import { Provider } from "react-redux";
-import { combineReducers, createStore } from "redux";
 
 import App from "./App";
-import filterReducer, { filterChange } from "./reducers/filterReducer";
-import noteReducer, { createNote } from "./reducers/noteReducer";
+import filterReducer from "./reducers/filterReducer";
+import noteReducer from "./reducers/noteReducer";
 
-const reducer = combineReducers({
-  notes: noteReducer,
-  filter: filterReducer,
-});
-
-const store = createStore(
-  reducer,
+const store = configureStore(
+  {
+    reducer: {
+      notes: noteReducer,
+      filter: filterReducer,
+    },
+  },
   window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
 );
 
