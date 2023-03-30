@@ -5,11 +5,9 @@ const notificationSlice = createSlice({
   initialState: { value: "" },
   reducers: {
     newAnecdoteNotification: (state, action) => {
-      console.log(action.payload);
       state.value = `blog ${action.payload} was created`;
     },
     voteAnecdoteNotification: (state, action) => {
-      console.log(action);
       state.value = `you voted ${action.payload} blog`;
     },
     deleteNotification: (state, action) => {

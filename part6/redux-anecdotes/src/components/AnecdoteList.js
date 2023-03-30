@@ -20,10 +20,13 @@ const AnecdoteList = () => {
   });
 
   const voteAction = (anecdote) => {
+    var clickTimeout;
     dispatch(voteAnecdote(anecdote.id));
     dispatch(voteAnecdoteNotification(anecdote.content));
 
-    setTimeout(() => {
+    clearTimeout(clickTimeout);
+
+    clickTimeout = setTimeout(function () {
       dispatch(deleteNotification());
     }, 5000);
   };
