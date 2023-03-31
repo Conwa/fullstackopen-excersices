@@ -1,5 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 
+const generateId = () => Number((Math.random() * 1000000).toFixed(0));
+
 const noteSlice = createSlice({
   name: "notes",
   initialState: [],
@@ -15,8 +17,6 @@ const noteSlice = createSlice({
         ...noteToChange,
         important: !noteToChange.important,
       };
-
-      console.log(JSON.parse(JSON.stringify(state)));
       return state.map((note) => (note.id !== id ? note : changedNote));
     },
     appendNote(state, action) {
