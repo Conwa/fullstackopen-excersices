@@ -1,4 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
+import anecdoteService from "../services/anecdotes";
 
 const anecdotesAtStart = [
   "Debugging is twice as hard as writing the code in the first place. Therefore, if you write the code as cleverly as possible, you are, by definition, not smart enough to debug it.",
@@ -47,6 +48,13 @@ const anecdoteSlice = createSlice({
     },
   },
 });
+
+export const initializeAnecdotes = () => {
+  return async (dispacth) => {
+    const anecdotes = await anecdoteService.getAll();
+    dispacth(setAnecdotes(anecdotes));
+  };
+};
 
 export const { newAnecdote, voteAnecdote, appendAnecdote, setAnecdotes } =
   anecdoteSlice.actions;
