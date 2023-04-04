@@ -1,9 +1,9 @@
 import { createSlice } from "@reduxjs/toolkit";
 import anecdoteService from "../services/anecdotes";
 
-const anecdotesAtStart = [
-  "Debugging is twice as hard as writing the code in the first place. Therefore, if you write the code as cleverly as possible, you are, by definition, not smart enough to debug it.",
-];
+// const anecdotesAtStart = [
+//   "Debugging is twice as hard as writing the code in the first place. Therefore, if you write the code as cleverly as possible, you are, by definition, not smart enough to debug it.",
+// ];
 
 const getId = () => (100000 * Math.random()).toFixed(0);
 
@@ -15,7 +15,7 @@ const asObject = (anecdote) => {
   };
 };
 
-const initialState = anecdotesAtStart.map(asObject);
+// const initialState = anecdotesAtStart.map(asObject);
 
 const anecdoteSlice = createSlice({
   name: "anecdote",
@@ -53,6 +53,13 @@ export const initializeAnecdotes = () => {
   return async (dispacth) => {
     const anecdotes = await anecdoteService.getAll();
     dispacth(setAnecdotes(anecdotes));
+  };
+};
+
+export const createNewAnecdote = (anecdote) => {
+  return async (dispacth) => {
+    const annecdoteToDataBase = await anecdoteService.createNew(anecdote);
+    dispacth(appendAnecdote(annecdoteToDataBase));
   };
 };
 
