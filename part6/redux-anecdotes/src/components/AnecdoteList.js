@@ -6,6 +6,8 @@ import {
   voteAnecdoteNotification,
 } from "../reducers/notificationReducer";
 
+import anecdoteService from "../services/anecdotes";
+
 const AnecdoteList = () => {
   const anecdotes = useSelector(({ anecdote, filter }) => {
     if (filter.value === "ALL") {
@@ -23,6 +25,8 @@ const AnecdoteList = () => {
     var clickTimeout;
     dispatch(voteAnecdote(anecdote.id));
     dispatch(voteAnecdoteNotification(anecdote.content));
+
+    anecdoteService.vote(anecdote.id);
 
     clearTimeout(clickTimeout);
 
