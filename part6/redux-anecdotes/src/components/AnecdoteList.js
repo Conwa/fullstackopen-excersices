@@ -1,12 +1,10 @@
 import { useDispatch, useSelector } from "react-redux";
 
-import { voteAnecdote } from "../reducers/anecdoteReducer";
+import { voteAnecdote, voteForAnecdote } from "../reducers/anecdoteReducer";
 import {
   deleteNotification,
   voteAnecdoteNotification,
 } from "../reducers/notificationReducer";
-
-import anecdoteService from "../services/anecdotes";
 
 const AnecdoteList = () => {
   const anecdotes = useSelector(({ anecdote, filter }) => {
@@ -23,10 +21,9 @@ const AnecdoteList = () => {
 
   const voteAction = (anecdote) => {
     var clickTimeout;
-    dispatch(voteAnecdote(anecdote.id));
-    dispatch(voteAnecdoteNotification(anecdote.content));
 
-    anecdoteService.vote(anecdote.id);
+    dispatch(voteForAnecdote(anecdote.id));
+    dispatch(voteAnecdoteNotification(anecdote.content));
 
     clearTimeout(clickTimeout);
 

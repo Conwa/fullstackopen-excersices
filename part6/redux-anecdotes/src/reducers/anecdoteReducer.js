@@ -63,11 +63,18 @@ export const createNewAnecdote = (anecdote) => {
   };
 };
 
+export const voteForAnecdote = (id) => {
+  return async (dispacth) => {
+    const updatedAnecdote = await anecdoteService.vote(id);
+    dispacth(voteAnecdote(id));
+  };
+};
+
 export const { newAnecdote, voteAnecdote, appendAnecdote, setAnecdotes } =
   anecdoteSlice.actions;
 export default anecdoteSlice.reducer;
 
-//LAST IMPLEMENTATION
+//LONG DATES IMPLEMENTATION
 
 // const anecdoteReducer = (state = initialState, action) => {
 //   // console.log("state now: ", state);
