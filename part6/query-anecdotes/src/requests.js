@@ -10,3 +10,9 @@ export const createAnecdote = (newAnecdote) => {
     .then((res) => res.data)
     .catch((err) => console.log(err.response.data));
 };
+
+export const voteAnecdote = (updatedAnecdote) => {
+  const id = updatedAnecdote.id;
+
+  axios.put(`${baseUrl}/${id}`, updatedAnecdote).then((res) => res.data);
+};
