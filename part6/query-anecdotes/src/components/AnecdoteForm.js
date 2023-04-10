@@ -10,6 +10,10 @@ const AnecdoteForm = () => {
     onSuccess: () => {
       queryClient.invalidateQueries("anecdotes");
     },
+    onError: (response) => {
+      console.log("sdf");
+      console.log(response);
+    },
   });
 
   const onCreate = (event) => {

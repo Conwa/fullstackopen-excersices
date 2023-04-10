@@ -8,7 +8,7 @@ export const createAnecdote = (newAnecdote) => {
   axios
     .post(baseUrl, newAnecdote)
     .then((res) => res.data)
-    .catch((err) => console.log(err.response.data));
+    .catch((err) => err.response.data);
 };
 
 export const voteAnecdote = (updatedAnecdote) => {

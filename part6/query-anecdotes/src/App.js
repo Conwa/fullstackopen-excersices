@@ -16,8 +16,10 @@ const App = () => {
       queryClient.invalidateQueries("anecdotes");
     },
   });
+
   const handleVote = (anecdote) => {
     voteAnecdoteMutation.mutate({ ...anecdote, votes: anecdote.votes + 1 });
+
     dispatch({ type: "VOTE", payload: anecdote.content });
 
     setTimeout(() => {
