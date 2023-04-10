@@ -4,15 +4,11 @@ import { createAnecdote } from "../requests";
 
 const AnecdoteForm = () => {
   const queryClient = useQueryClient();
-  const dispatch = useNotificationDispatch();
+  const dispatchNotification = useNotificationDispatch();
 
   const newAnecdoteMutation = useMutation(createAnecdote, {
     onSuccess: () => {
       queryClient.invalidateQueries("anecdotes");
-    },
-    onError: (response) => {
-      console.log("sdf");
-      console.log(response);
     },
   });
 
@@ -20,12 +16,31 @@ const AnecdoteForm = () => {
     event.preventDefault();
     const content = event.target.anecdote.value;
 
-    newAnecdoteMutation.mutate({ content, votes: 0 });
-    dispatch({ type: "CREATE", payload: content });
+    newAnecdoteMutation.mutate(
+      { content, votes: 0 },
+      {
+        onSuccess: () => {
+          dispatchNotification({
+            type: "CREATE",
+            payload: `You created the anecdote '${content}'!`,
+          });
+          setTimeout(() => {
+            dispatchNotification({ type: "HIDE" });
+          }, 5000);
+        },
+        onError: () => {
+          dispatchNotification({
+            type: "CREATE",
+            payload: `too short anecdote, must have length 5 or more`,
+          });
+          setTimeout(() => {
+            dispatchNotification({ type: "HIDE" });
+          }, 5000);
+        },
+      }
+    );
+
     event.target.anecdote.value = "";
-    setTimeout(() => {
-      dispatch({ type: "" });
-    }, 5000);
   };
 
   return (

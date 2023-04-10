@@ -9,7 +9,7 @@ import Notification from "./components/Notification";
 
 const App = () => {
   const queryClient = useQueryClient();
-  const dispatch = useNotificationDispatch();
+  const dispatchNotification = useNotificationDispatch();
 
   const voteAnecdoteMutation = useMutation(voteAnecdote, {
     onSuccess: () => {
@@ -18,13 +18,21 @@ const App = () => {
   });
 
   const handleVote = (anecdote) => {
-    voteAnecdoteMutation.mutate({ ...anecdote, votes: anecdote.votes + 1 });
+    voteAnecdoteMutation.mutate(
+      { ...anecdote, votes: anecdote.votes + 1 },
+      {
+        onSuccess: () => {
+          dispatchNotification({
+            type: "VOTE",
+            payload: `You voted fro ${anecdote.content} blog!`,
+          });
 
-    dispatch({ type: "VOTE", payload: anecdote.content });
-
-    setTimeout(() => {
-      dispatch({ type: "" });
-    }, 5000);
+          setTimeout(() => {
+            dispatchNotification({ type: "HIDE" });
+          }, 5000);
+        },
+      }
+    );
   };
 
   const result = useQuery("anecdotes", getAnecdotes);

@@ -4,12 +4,8 @@ const baseUrl = "http://localhost:3001/anecdotes";
 
 export const getAnecdotes = () => axios.get(baseUrl).then((res) => res.data);
 
-export const createAnecdote = (newAnecdote) => {
-  axios
-    .post(baseUrl, newAnecdote)
-    .then((res) => res.data)
-    .catch((err) => err.response.data);
-};
+export const createAnecdote = (content) =>
+  axios.post({ baseUrl }, content).then((res) => res.data);
 
 export const voteAnecdote = (updatedAnecdote) => {
   const id = updatedAnecdote.id;
