@@ -24,7 +24,7 @@ const App = () => {
         onSuccess: () => {
           dispatchNotification({
             type: "VOTE",
-            payload: `You voted fro ${anecdote.content} blog!`,
+            payload: `You voted for ${anecdote.content} anecdote!`,
           });
 
           setTimeout(() => {
