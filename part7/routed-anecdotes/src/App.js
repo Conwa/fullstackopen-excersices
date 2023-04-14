@@ -154,30 +154,20 @@ const App = () => {
   return (
     <Router>
       <div>
-        <Link to="/anecdotes">home</Link>
-        <Link to="/notes">notes</Link>
-        <Link to="/users">users</Link>
-      </div>
-
-      <div>
         <h1>Software anecdotes</h1>
+        <Menu />
         <Routes>
           <Route
             path="/anecdotes"
             element={<AnecdoteList anecdotes={anecdotes} />}
           ></Route>
+          <Route path="/about" element={<About />}></Route>
+          <Route path="/create" element={<CreateNew addNew={addNew} />}></Route>
         </Routes>
         <Footer />
       </div>
     </Router>
   );
 };
-
-{
-  /* <Menu />
-<AnecdoteList anecdotes={anecdotes} />
-<About />
-<CreateNew addNew={addNew} /> */
-}
 
 export default App;
