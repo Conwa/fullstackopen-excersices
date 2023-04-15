@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Link, Route, BrowserRouter as Router, Routes } from "react-router-dom";
+import { Route, BrowserRouter as Router, Routes } from "react-router-dom";
 
 import About from "./components/About";
 import AnecdoteList from "./components/AnecdoteList";
