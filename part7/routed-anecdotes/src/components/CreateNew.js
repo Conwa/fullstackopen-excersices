@@ -16,6 +16,10 @@ const CreateNew = (props) => {
       info,
       votes: 0,
     });
+    props.setNotification(content);
+    setTimeout(() => {
+      props.setNotification("");
+    }, 5000);
 
     navigate("/");
   };
