@@ -1,4 +1,3 @@
-import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 import { useField } from "../hooks";
@@ -6,26 +5,32 @@ import { useField } from "../hooks";
 const CreateNew = (props) => {
   const navigate = useNavigate();
 
+  const content = useField("text");
+  const author = useField("text");
+  const info = useField("text");
+
   const handleSubmit = (e) => {
     e.preventDefault();
 
     props.addNew({
       content: content.value,
-      author,
-      info,
+      author: author.value,
+      info: info.value,
       votes: 0,
     });
+    navigate("/");
     props.setNotification(content.value);
     setTimeout(() => {
       props.setNotification("");
     }, 5000);
-
-    navigate("/");
   };
 
-  const content = useField("content");
-  const author = useField("author");
-  const info = useField("info");
+  const handleReset = (event) => {
+    const contentReset = content.onReset();
+    const authorReset = author.onReset();
+    const infoReset = info.onReset();
+    return { contentReset, authorReset, infoReset };
+  };
 
   return (
     <div>
@@ -43,7 +48,11 @@ const CreateNew = (props) => {
           url for more info
           <input {...info} />
         </div>
-        <button>create</button>
+        <div></div>
+        <button type="button" onClick={handleReset}>
+          erase info
+        </button>
+        <button type="submit">create</button>
       </form>
     </div>
   );
