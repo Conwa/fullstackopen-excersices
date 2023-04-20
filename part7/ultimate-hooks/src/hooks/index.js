@@ -12,10 +12,10 @@ export const useField = (type) => {
 };
 
 export const useResource = (baseUrl) => {
-  const [value, setValue] = useState([]);
+  const [value, setResourceValue] = useState([]);
 
   useEffect(() => {
-    const queryNotes = async (url) => {
+    const queryResource = async (url) => {
       try {
         const response = await axios.get(`${url}`);
         console.log(response);
@@ -25,19 +25,19 @@ export const useResource = (baseUrl) => {
       }
     };
 
-    queryNotes(baseUrl).then((response) => {
-      setValue(response);
+    queryResource(baseUrl).then((response) => {
+      setResourceValue(response);
     });
   }, [baseUrl]);
 
-  const create = async (input) => {
+  const create = async (newResourse) => {
     try {
-      const newInput = await axios.post(baseUrl, input);
+      const newInput = await axios.post(baseUrl, newResourse);
       const updatedValue = (await axios.get(baseUrl)).data; // fetching the updated list of resources
-      setValue(updatedValue);
+      setResourceValue(updatedValue);
       return newInput.data;
     } catch (error) {
-      return error;
+      return { error };
     }
   };
   const service = {
