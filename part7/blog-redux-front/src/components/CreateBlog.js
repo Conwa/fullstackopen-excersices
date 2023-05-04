@@ -35,7 +35,6 @@ const CreateBlog = (props) => {
     } catch (error) {
       setError(true);
       const errorMessage = error.response.data.error;
-      console.log(errorMessage);
 
       dispatch(setNotification(errorMessage));
       setTimeout(() => {
