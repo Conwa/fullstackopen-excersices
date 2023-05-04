@@ -1,13 +1,19 @@
 import { useState } from "react";
+import { useDispatch } from "react-redux";
+
 import blogService from "../services/blogs";
+
+import { setNotification } from "../reducers/notificationSlice";
+
 import Notification from "./Notification";
 
 const CreateBlog = (props) => {
   const [title, setTitle] = useState("");
   const [author, setAuthor] = useState("");
   const [url, setUrl] = useState("");
-  const [message, setMessage] = useState(null);
   const [error, setError] = useState(false);
+
+  const dispatch = useDispatch();
 
   const submitBlog = async (event) => {
     event.preventDefault();
@@ -21,15 +27,21 @@ const CreateBlog = (props) => {
       setUrl("");
       setError(false);
 
-      setMessage(`a new blog "${title}" was succesfully added`);
+      dispatch(setNotification(`a new blog "${title}" was succesfully added`));
+
       setTimeout(() => {
-        setMessage(null);
+        dispatch(setNotification(null));
       }, 5000);
     } catch (error) {
       setError(true);
-      setMessage(error.response.data.error);
+      const errorMessage = error.response.data.error;
+      console.log(errorMessage);
+
+      dispatch(setNotification(errorMessage));
       setTimeout(() => {
-        setMessage(null);
+        dispatch(setNotification(null));
+
+        dispatch(setNotification(null));
         setError(false);
       }, 5000);
     }
@@ -37,7 +49,7 @@ const CreateBlog = (props) => {
 
   return (
     <>
-      <Notification message={message} error={error} />
+      <Notification error={error} />
       <h2>create new</h2>
       <form id="form" onSubmit={submitBlog}>
         <div>
