@@ -7,6 +7,8 @@ import { useSelector } from "react-redux";
 const LoggedView = (props) => {
   const blogs = useSelector((state) => state.blog);
 
+  console.log("it repaints");
+
   return (
     <>
       <h2>BLOGS</h2>

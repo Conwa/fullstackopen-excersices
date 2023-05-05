@@ -7,10 +7,13 @@ import LoginView from "./components/LoginView";
 import blogService from "./services/blogs";
 import loginService from "./services/login";
 
-import { initializeBlogs } from "./reducers/blogSlice";
+import {
+  deleteTargetBlog,
+  initializeBlogs,
+  voteForBlog,
+} from "./reducers/blogSlice";
 
 const App = () => {
-  const [blogs, setBlogs] = useState([]);
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [user, setUser] = useState(null);
@@ -46,25 +49,15 @@ const App = () => {
     }
   };
 
-  const handleSumLikes = async (blogObject) => {
-    const updatedBLog = await blogService.update(blogObject);
-    setBlogs(
-      blogs.map((blog) => (blog.id === updatedBLog.id ? updatedBLog : blog))
-    );
+  const handleSumLikes = (blogObject) => {
+    dispacth(voteForBlog(blogObject));
   };
-
-  //MISSING FEATURE
-  //Show the button for deleting a blog post only if the blog post was added by the user.
-  //dont remember when i solved it but its done
 
   const handleDelete = async (blogObject) => {
     const message = `Delete ${blogObject.title} by ${blogObject.author}?`;
 
     if (window.confirm(message)) {
-      await blogService.deletion(blogObject);
-
-      const filteredBlogs = blogs.filter((blog) => blog.id !== blogObject.id);
-      setBlogs(filteredBlogs);
+      dispacth(deleteTargetBlog(blogObject));
     }
   };
 
