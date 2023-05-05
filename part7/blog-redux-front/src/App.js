@@ -53,7 +53,7 @@ const App = () => {
     dispacth(voteForBlog(blogObject));
   };
 
-  const handleDelete = async (blogObject) => {
+  const handleDelete = (blogObject) => {
     const message = `Delete ${blogObject.title} by ${blogObject.author}?`;
 
     if (window.confirm(message)) {
