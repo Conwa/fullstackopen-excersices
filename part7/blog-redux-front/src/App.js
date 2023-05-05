@@ -1,18 +1,21 @@
 import { useEffect, useState } from "react";
+import { useDispatch } from "react-redux";
 
-// import Blog from "./components/Blog";
-// import CreateBlog from "./components/CreateBlog";
 import LoggedView from "./components/LoggedView";
 import LoginView from "./components/LoginView";
 
 import blogService from "./services/blogs";
 import loginService from "./services/login";
 
+import { initializeBlogs } from "./reducers/blogSlice";
+
 const App = () => {
   const [blogs, setBlogs] = useState([]);
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [user, setUser] = useState(null);
+
+  const dispacth = useDispatch();
 
   //didn´t know if the sorting had to be done by most to least likes
   //or viceversa
@@ -27,6 +30,7 @@ const App = () => {
           )
         )
       );
+    dispacth(initializeBlogs());
   }, []);
 
   useEffect(() => {
@@ -63,6 +67,7 @@ const App = () => {
 
   //MISSING FEATURE
   //Show the button for deleting a blog post only if the blog post was added by the user.
+  //dont remember when i solved it but its done
 
   const handleDelete = async (blogObject) => {
     const message = `Delete ${blogObject.title} by ${blogObject.author}?`;

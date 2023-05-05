@@ -2,7 +2,13 @@ import Blog from "./Blog";
 import CreateBlog from "./CreateBlog";
 import Togglable from "./Togglable";
 
+import { useSelector } from "react-redux";
+
 const LoggedView = (props) => {
+  const reduxBlogs = useSelector((state) => state.blog);
+
+  console.log(reduxBlogs);
+
   return (
     <>
       <h2>BLOGS</h2>
@@ -26,15 +32,17 @@ const LoggedView = (props) => {
           />
         </Togglable>
       </>
-      {props.blogs.map((blog) => (
-        <Blog
-          key={blog.id}
-          blog={blog}
-          handleSumLikes={props.handleSumLikes}
-          handleDelete={props.handleDelete}
-          user={props.user}
-        />
-      ))}
+      {[...reduxBlogs]
+        .sort((prevBlog, blog) => console.log(prevBlog.likes, blog.likes))
+        .map((blog) => (
+          <Blog
+            key={blog.id}
+            blog={blog}
+            handleSumLikes={props.handleSumLikes}
+            handleDelete={props.handleDelete}
+            user={props.user}
+          />
+        ))}
     </>
   );
 };
