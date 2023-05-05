@@ -5,9 +5,7 @@ import Togglable from "./Togglable";
 import { useSelector } from "react-redux";
 
 const LoggedView = (props) => {
-  const reduxBlogs = useSelector((state) => state.blog);
-
-  console.log(reduxBlogs);
+  const blogs = useSelector((state) => state.blog);
 
   return (
     <>
@@ -25,15 +23,11 @@ const LoggedView = (props) => {
         </button>
         <Togglable buttonLabel="Open Blog Creator">
           {" "}
-          <CreateBlog
-            user={props.user}
-            setBlogs={props.setBlogs}
-            blogs={props.blogs}
-          />
+          <CreateBlog />
         </Togglable>
       </>
-      {[...reduxBlogs]
-        .sort((prevBlog, blog) => console.log(prevBlog.likes, blog.likes))
+      {[...blogs]
+        .sort((prevBlog, nextBlog) => nextBlog.likes - prevBlog.likes)
         .map((blog) => (
           <Blog
             key={blog.id}

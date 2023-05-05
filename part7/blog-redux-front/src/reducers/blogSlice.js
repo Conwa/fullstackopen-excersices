@@ -18,15 +18,14 @@ const blogSlice = createSlice({
 export const initializeBlogs = () => {
   return async (dispacth) => {
     const anecdotes = await blogService.getAll();
-
     dispacth(setBlogs(anecdotes));
   };
 };
 
-export const createNewAnecdote = (anecdote) => {
+export const createNewBlog = (blog) => {
   return async (dispacth) => {
-    const annecdoteToDataBase = await blogService.createNew(anecdote);
-    dispacth(appendBlog(annecdoteToDataBase));
+    const blogToDataBase = await blogService.create(blog);
+    dispacth(appendBlog(blogToDataBase));
   };
 };
 

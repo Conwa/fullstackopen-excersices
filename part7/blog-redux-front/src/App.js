@@ -17,21 +17,9 @@ const App = () => {
 
   const dispacth = useDispatch();
 
-  //didn´t know if the sorting had to be done by most to least likes
-  //or viceversa
-  //solved doubt on 5.23 exersice
   useEffect(() => {
-    blogService
-      .getAll()
-      .then((blogs) =>
-        setBlogs(
-          [...blogs].sort(
-            (prevBlog, nextBlog) => nextBlog.likes - prevBlog.likes
-          )
-        )
-      );
     dispacth(initializeBlogs());
-  }, []);
+  }, [dispacth]);
 
   useEffect(() => {
     const loggedUserJSON = window.localStorage.getItem("loggedUser");
@@ -94,8 +82,6 @@ const App = () => {
         <LoggedView
           user={user}
           setUser={setUser}
-          blogs={blogs}
-          setBlogs={setBlogs}
           handleSumLikes={handleSumLikes}
           handleDelete={handleDelete}
         />

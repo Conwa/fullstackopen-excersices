@@ -1,13 +1,12 @@
 import { useState } from "react";
 import { useDispatch } from "react-redux";
 
-import blogService from "../services/blogs";
-
+import { createNewBlog } from "../reducers/blogSlice";
 import { setNotification } from "../reducers/notificationSlice";
 
 import Notification from "./Notification";
 
-const CreateBlog = (props) => {
+const CreateBlog = () => {
   const [title, setTitle] = useState("");
   const [author, setAuthor] = useState("");
   const [url, setUrl] = useState("");
@@ -20,8 +19,8 @@ const CreateBlog = (props) => {
     const submittedBlog = { title: title, author: author, url: url };
 
     try {
-      const addedBlog = await blogService.create(submittedBlog);
-      props.setBlogs(props.blogs.concat(addedBlog));
+      dispatch(createNewBlog(submittedBlog));
+
       setAuthor("");
       setTitle("");
       setUrl("");
@@ -40,7 +39,6 @@ const CreateBlog = (props) => {
       setTimeout(() => {
         dispatch(setNotification(null));
 
-        dispatch(setNotification(null));
         setError(false);
       }, 5000);
     }
