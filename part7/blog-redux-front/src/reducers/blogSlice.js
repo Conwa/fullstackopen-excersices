@@ -16,15 +16,8 @@ const blogSlice = createSlice({
     updateBlog(state, action) {
       const targetBlog = action.payload;
 
-      const blogToChange = state.find((el) => el.id === targetBlog.id);
-
-      const changedBlog = {
-        ...blogToChange,
-        likes: blogToChange.likes + 1,
-      };
-
       return state.map((blog) =>
-        blog.id !== targetBlog.id ? blog : changedBlog
+        blog.id !== targetBlog.id ? blog : targetBlog
       );
     },
     deleteBlog(state, action) {
@@ -48,10 +41,10 @@ export const createNewBlog = (blog) => {
   };
 };
 
-export const voteForBlog = (id) => {
+export const voteForBlog = (blog) => {
   return async (dispacth) => {
-    const updatedBlog = await blogService.update(id);
-    dispacth(updateBlog(id));
+    const updatedBlog = await blogService.update(blog);
+    dispacth(updateBlog(updatedBlog));
   };
 };
 
