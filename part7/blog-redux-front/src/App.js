@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
@@ -5,7 +6,7 @@ import LoggedView from "./components/LoggedView";
 import LoginView from "./components/LoginView";
 
 import { deleteTargetBlog, voteForBlog } from "./reducers/blogSlice";
-import { testLogin } from "./reducers/userSlice";
+import { isUserLoged, testLogin } from "./reducers/userSlice";
 
 const App = () => {
   const [username, setUsername] = useState("");
@@ -14,9 +15,19 @@ const App = () => {
 
   const dispacth = useDispatch();
 
-  const loggedUser = useSelector((state) => state.userInfo);
+  const reduxStoreUser = useSelector((state) => state.userInfo);
+
   useEffect(() => {
-    provideUser(loggedUser);
+    const loggedUserJSON = window.localStorage.getItem("loggedUser");
+
+    const user = JSON.parse(loggedUserJSON);
+
+    provideUser(user);
+    dispacth(isUserLoged());
+  }, [dispacth]);
+
+  useEffect(() => {
+    provideUser(reduxStoreUser);
   }, [useSelector((state) => state.userInfo)]);
 
   const handleLogin = (event) => {

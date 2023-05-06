@@ -1,6 +1,8 @@
 import PropTypes from "prop-types";
 import { useEffect, useState } from "react";
 
+import { useSelector } from "react-redux";
+
 const Blog = ({ handleDelete, handleSumLikes, blog, user }) => {
   Blog.propTypes = {
     handleDelete: PropTypes.func.isRequired,
@@ -16,7 +18,8 @@ const Blog = ({ handleDelete, handleSumLikes, blog, user }) => {
     if (blog.user.username === user.username) {
       setOwner(true);
     }
-  }, []);
+    console.log("blog check for ownew");
+  }, [useSelector((state) => state.blogs)]);
   const toggleVisibility = () => {
     setDetailed(!detailed);
   };

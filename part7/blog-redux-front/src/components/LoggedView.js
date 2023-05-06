@@ -14,12 +14,9 @@ const LoggedView = (props) => {
 
   useEffect(() => {
     dispacth(initializeBlogs());
-    console.log("blogs setted");
   }, [dispacth]);
 
   const blogs = useSelector((state) => state.blogs);
-
-  console.log("logged view repainted");
 
   return (
     <>

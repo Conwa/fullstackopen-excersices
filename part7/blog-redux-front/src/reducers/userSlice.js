@@ -18,6 +18,15 @@ const userSlice = createSlice({
   },
 });
 
+export const isUserLoged = () => {
+  const loggedUserJSON = window.localStorage.getItem("loggedUser");
+
+  const user = JSON.parse(loggedUserJSON);
+  return async (dispatch) => {
+    dispatch(setUser(user));
+  };
+};
+
 export const testLogin = (username, password) => {
   return async (dispatch) => {
     try {
