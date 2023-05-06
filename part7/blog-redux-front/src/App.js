@@ -1,52 +1,30 @@
 import { useEffect, useState } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
 import LoggedView from "./components/LoggedView";
 import LoginView from "./components/LoginView";
 
-import blogService from "./services/blogs";
-import loginService from "./services/login";
-
-import {
-  deleteTargetBlog,
-  initializeBlogs,
-  voteForBlog,
-} from "./reducers/blogSlice";
+import { deleteTargetBlog, voteForBlog } from "./reducers/blogSlice";
+import { testLogin } from "./reducers/userSlice";
 
 const App = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
-  const [user, setUser] = useState(null);
+  const [user, provideUser] = useState(null);
 
   const dispacth = useDispatch();
 
+  const loggedUser = useSelector((state) => state.userInfo);
   useEffect(() => {
-    dispacth(initializeBlogs());
-  }, [dispacth]);
+    provideUser(loggedUser);
+  }, [useSelector((state) => state.userInfo)]);
 
-  useEffect(() => {
-    const loggedUserJSON = window.localStorage.getItem("loggedUser");
-    if (loggedUserJSON) {
-      const user = JSON.parse(loggedUserJSON);
-      setUser(user);
-      blogService.setToken(user.token);
-    }
-  }, []);
-
-  const handleLogin = async (event) => {
+  const handleLogin = (event) => {
     event.preventDefault();
+    dispacth(testLogin(username, password));
 
-    try {
-      const user = await loginService.login({ username, password });
-      setUser(user);
-      // console.log(user);
-      setPassword("");
-      setUsername("");
-      window.localStorage.setItem("loggedUser", JSON.stringify(user));
-      blogService.setToken(user.token);
-    } catch (error) {
-      console.log(error);
-    }
+    setUsername("");
+    setPassword("");
   };
 
   const handleSumLikes = (blogObject) => {
@@ -74,7 +52,6 @@ const App = () => {
       ) : (
         <LoggedView
           user={user}
-          setUser={setUser}
           handleSumLikes={handleSumLikes}
           handleDelete={handleDelete}
         />

@@ -1,13 +1,25 @@
+/* eslint-disable no-unused-vars */
 import Blog from "./Blog";
 import CreateBlog from "./CreateBlog";
 import Togglable from "./Togglable";
 
-import { useSelector } from "react-redux";
+import { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+
+import { initializeBlogs } from "../reducers/blogSlice";
+import { exitLogin } from "../reducers/userSlice";
 
 const LoggedView = (props) => {
-  const blogs = useSelector((state) => state.blog);
+  const dispacth = useDispatch();
 
-  console.log("it repaints");
+  useEffect(() => {
+    dispacth(initializeBlogs());
+    console.log("blogs setted");
+  }, [dispacth]);
+
+  const blogs = useSelector((state) => state.blogs);
+
+  console.log("logged view repainted");
 
   return (
     <>
@@ -16,9 +28,7 @@ const LoggedView = (props) => {
         <h3>{props.user.name} logged in</h3>
         <button
           onClick={() => {
-            window.localStorage.removeItem("loggedUser");
-            //setUser to trigger useEffect hook
-            props.setUser(null);
+            dispacth(exitLogin());
           }}
         >
           log out
