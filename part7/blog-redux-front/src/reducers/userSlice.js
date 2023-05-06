@@ -22,6 +22,7 @@ export const isUserLoged = () => {
   const loggedUserJSON = window.localStorage.getItem("loggedUser");
 
   const user = JSON.parse(loggedUserJSON);
+  blogService.setToken(user.token);
   return async (dispatch) => {
     dispatch(setUser(user));
   };
