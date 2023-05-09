@@ -1,6 +1,6 @@
 const User = ({ author }) => {
   console.log(author);
-  return <h2>User</h2>;
+  return <h2>{author.name} </h2>;
 };
 
 export default User;
