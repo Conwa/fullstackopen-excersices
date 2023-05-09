@@ -29,8 +29,8 @@ const blogSlice = createSlice({
 
 export const initializeBlogs = () => {
   return async (dispacth) => {
-    const anecdotes = await blogService.getAll();
-    dispacth(setBlogs(anecdotes));
+    const blogs = await blogService.getAll();
+    dispacth(setBlogs(blogs));
   };
 };
 
