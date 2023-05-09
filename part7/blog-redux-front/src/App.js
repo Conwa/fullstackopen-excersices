@@ -14,6 +14,7 @@ const App = () => {
   const [user, provideUser] = useState(null);
 
   const dispacth = useDispatch();
+  const authors = useSelector((state) => state.authors);
 
   const reduxStoreUser = useSelector((state) => state.userInfo);
 

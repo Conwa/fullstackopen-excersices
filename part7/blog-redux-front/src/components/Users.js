@@ -8,7 +8,7 @@ const Users = () => {
   const boxStyle = {
     display: "flex",
     flexDirection: "column",
-    width: "fit-content",
+    maxWidth: "15%",
     border: "2px dotted black",
     marginTop: ".5rem",
     marginBottom: "1rem",
@@ -28,13 +28,18 @@ const Users = () => {
     <>
       <h2>Users</h2>
       <div style={boxStyle}>
+        <div style={authorDivStyle}>
+          <p style={{ fontWeight: "bold" }}>User</p>
+          <p style={{ fontWeight: "bold" }}>Blogs Created</p>
+        </div>
+
         {authors.map((author) => (
           <div key={author.id} style={authorDivStyle}>
-            <Link style={authorStyle}>
+            <Link style={authorStyle} to={`/users/${author.id}`}>
               {" "}
               <p>{author.username.toUpperCase()}:</p>
             </Link>
-            <p> created {author.blogs.length} blogs</p>
+            <p style={{ fontWeight: "bold" }}> {author.blogs.length}</p>
           </div>
         ))}
       </div>
