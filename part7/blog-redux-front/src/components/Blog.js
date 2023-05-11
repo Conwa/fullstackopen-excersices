@@ -42,6 +42,11 @@ const Blog = ({ handleDelete, handleSumLikes, blog, user }) => {
     borderWidth: 1,
     marginBottom: 5,
   };
+
+  if (blog === null) {
+    return null;
+  }
+
   if (detailed === false) {
     return (
       <div style={blogStyle} className="minifiedVersion blog">

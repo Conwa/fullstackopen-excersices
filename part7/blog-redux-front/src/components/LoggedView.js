@@ -1,22 +1,13 @@
-/* eslint-disable no-unused-vars */
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import {
-  Link,
-  Route,
-  BrowserRouter as Router,
-  Routes,
-  useMatch,
-} from "react-router-dom";
+import { Link, Route, Routes, useMatch } from "react-router-dom";
 
 import { initalizeAuthors } from "../reducers/blogAuthorsSlice";
 import { initializeBlogs } from "../reducers/blogSlice";
 import { exitLogin } from "../reducers/userSlice";
 
-import Blog from "./Blog";
 import BlogList from "./BlogList";
-import CreateBlog from "./CreateBlog";
-import Togglable from "./Togglable";
+import BlogView from "./BlogView";
 import User from "./User";
 import Users from "./Users";
 
@@ -25,9 +16,14 @@ const LoggedView = (props) => {
   const blogs = useSelector((state) => state.blogs);
   const authors = useSelector((state) => state.authors);
 
-  const authorMatch = useMatch("/users/:id");
-  const author = authorMatch
-    ? authors.find((author) => author.id === authorMatch.params.id)
+  const authorMatcher = useMatch("/users/:id");
+  const authorMatch = authorMatcher
+    ? authors.find((author) => author.id === authorMatcher.params.id)
+    : null;
+
+  const blogMatcher = useMatch("/blogs/:id");
+  const blogMatch = blogMatcher
+    ? blogs.find((blog) => blog.id === blogMatcher.params.id)
     : null;
 
   useEffect(() => {
@@ -77,20 +73,19 @@ const LoggedView = (props) => {
               />
             }
           />
-          <Route path="/users/:id" element={<User author={author} />} />
+          <Route path="/users/:id" element={<User author={authorMatch} />} />
+          <Route
+            path="/blogs/:id"
+            element={
+              <BlogView
+                blog={blogMatch}
+                handleSumLikes={props.handleSumLikes}
+                user={props.user}
+              />
+            }
+          />
         </Routes>
       </>
-      {/* {[...blogs]
-        .sort((prevBlog, nextBlog) => nextBlog.likes - prevBlog.likes)
-        .map((blog) => (
-          <Blog
-            key={blog.id}
-            blog={blog}
-            handleSumLikes={props.handleSumLikes}
-            handleDelete={props.handleDelete}
-            user={props.user}
-          />
-        ))} */}
     </>
   );
 };
