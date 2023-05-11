@@ -66,15 +66,21 @@ const LoggedView = (props) => {
         <Routes>
           {" "}
           <Route path="/users" element={<Users />} />
-          <Route path="/" element={<BlogList />} />
+          <Route
+            path="/"
+            element={
+              <BlogList
+                blogs={blogs}
+                handleSumLikes={props.handleSumLikes}
+                handleDelete={props.handleDelete}
+                user={props.user}
+              />
+            }
+          />
           <Route path="/users/:id" element={<User author={author} />} />
         </Routes>
-        <Togglable buttonLabel="Open Blog Creator">
-          {" "}
-          <CreateBlog />
-        </Togglable>
       </>
-      {[...blogs]
+      {/* {[...blogs]
         .sort((prevBlog, nextBlog) => nextBlog.likes - prevBlog.likes)
         .map((blog) => (
           <Blog
@@ -84,7 +90,7 @@ const LoggedView = (props) => {
             handleDelete={props.handleDelete}
             user={props.user}
           />
-        ))}
+        ))} */}
     </>
   );
 };
