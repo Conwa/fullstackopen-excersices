@@ -51,6 +51,8 @@ blogsRouter.post("/", async (request, response, next) => {
 
   const user = request.user;
 
+  console.log(user);
+
   const blog = new Blog({
     title: body.title,
     author: body.author,
@@ -122,6 +124,31 @@ blogsRouter.put("/:id", async (request, response, next) => {
   } catch (error) {
     next(error);
   }
+});
+
+blogsRouter.post("/:id/comments", async (request, response) => {
+  const blog = await Blog.findById(request.params.id);
+
+  if (blog) {
+    const comment = request.body.comment;
+    const newBlog = {
+      title: blog.title,
+      author: blog.author,
+      url: blog.url,
+      likes: blog.likes,
+      comments:
+        blog.comments !== undefined ? blog.comments.concat(comment) : comment,
+    };
+    const updatedBlog = await Blog.findByIdAndUpdate(
+      request.params.id,
+      newBlog,
+      { new: true }
+    );
+    console.log(updatedBlog);
+    response.json(updatedBlog.toJSON());
+  }
+
+  response.status(404).end();
 });
 
 module.exports = blogsRouter;

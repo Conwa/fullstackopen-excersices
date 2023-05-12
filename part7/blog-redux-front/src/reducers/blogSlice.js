@@ -44,6 +44,7 @@ export const createNewBlog = (blog) => {
 export const voteForBlog = (blog) => {
   return async (dispacth) => {
     const updatedBlog = await blogService.update(blog);
+
     dispacth(updateBlog(updatedBlog));
   };
 };
@@ -52,6 +53,13 @@ export const deleteTargetBlog = (blog) => {
   return async (dispacth) => {
     const deletedBlog = await blogService.deletion(blog);
     dispacth(deleteBlog(blog));
+  };
+};
+
+export const commentBlog = (id, comment) => {
+  return async (dispatch) => {
+    const data = await blogService.comment(id, comment);
+    // dispatch(updateBlog(data));
   };
 };
 

@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import axios from "axios";
 const baseUrl = "/api/blogs";
 
@@ -40,4 +41,23 @@ const deletion = async (objectToDelete) => {
   return request.then((response) => response.data);
 };
 
-export default { getAll, create, update, deletion, setToken };
+const comment = async (id, comment) => {
+  const config = {
+    headers: { Authorization: token },
+  };
+
+  // const request = await axios.post(
+  //   `${baseUrl}/${id}/comments`,
+  //   comment,
+  //   config
+  // );
+  const request = await axios.post(
+    `${baseUrl}/${id}/comments`,
+    { comment },
+    config
+  );
+
+  return request.data;
+};
+
+export default { getAll, create, update, deletion, setToken, comment };
