@@ -20,9 +20,10 @@ const BlogList = ({ blogs, handleSumLikes, handleDelete, user }) => {
         .sort((prevBlog, nextBlog) => nextBlog.likes - prevBlog.likes)
         .map((blog) => (
           <>
-            <Link key={blog.id} to={`/blogs/${blog.id}`}>
+            <Link to={`/blogs/${blog.id}`}>
               {" "}
               <Blog
+                key={blog.id}
                 blog={blog}
                 handleSumLikes={handleSumLikes}
                 handleDelete={handleDelete}

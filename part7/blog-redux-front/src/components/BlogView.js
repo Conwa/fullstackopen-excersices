@@ -42,12 +42,14 @@ const BlogView = ({ handleSumLikes, blog, user }) => {
       <>
         {" "}
         <h3>Comments:</h3>{" "}
-        {blog.comments.lenght !== 0 ? (
-          blog.comments.map((el) => {
-            console.log(el);
-          })
+        {blog.comments.length !== 0 ? (
+          <ul>
+            {blog.comments.map((el) => (
+              <li key={blog.id}> {el} </li>
+            ))}
+          </ul>
         ) : (
-          <p>s</p>
+          <p style={{ fontWeight: "bold" }}>No comments added yet!</p>
         )}
         <input
           type="text"
