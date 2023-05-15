@@ -41,7 +41,7 @@ const BlogView = ({ handleSumLikes, blog, user }) => {
       </>
       <>
         {" "}
-        <h3>Comments:</h3>{" "}
+        <h3 className="text-3xl font-bold underline">Comments:</h3>{" "}
         {blog.comments.length !== 0 ? (
           <ul>
             {blog.comments.map((el) => (

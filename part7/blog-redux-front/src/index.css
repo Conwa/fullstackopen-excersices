@@ -1,17 +1,21 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 
-  .note { color: green;
-    font-style: italic;
-    background-color: lightgrey;
-   padding: .5rem;
-    border: 3px solid green;
-    border-radius: 1rem;
-  }
-  
-  .error {
-    color: red;
-    font-style: italic;
-    background-color: lightgrey;
-   padding: .5rem;
-    border: 3px solid red;
-    border-radius: 1rem;
-  }
+.note {
+  color: green;
+  font-style: italic;
+  background-color: lightgrey;
+  padding: 0.5rem;
+  border: 3px solid green;
+  border-radius: 1rem;
+}
+
+.error {
+  color: red;
+  font-style: italic;
+  background-color: lightgrey;
+  padding: 0.5rem;
+  border: 3px solid red;
+  border-radius: 1rem;
+}
