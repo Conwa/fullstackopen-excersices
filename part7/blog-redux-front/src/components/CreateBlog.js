@@ -47,40 +47,74 @@ const CreateBlog = () => {
   return (
     <>
       <Notification error={error} />
-      <h2>create new</h2>
-      <form id="form" onSubmit={submitBlog}>
-        <div>
-          title:
-          <input
-            id="title-input"
-            type="text"
-            value={title}
-            name="title"
-            onChange={({ target }) => setTitle(target.value)}
-          ></input>
+
+      <form
+        className="px-5 py-2.5 font-medium bg-blue-50  rounded-lg text-sm my-4 w-1/3  max-w-sm"
+        id="form"
+        onSubmit={submitBlog}
+      >
+        <h2 className="font-medium cursor-default text-lg mb-4 border-b-2 border-b-gray-500">
+          Create New
+        </h2>
+
+        <div className="md:flex md:items-center mb-6">
+          <div className="md:w-1/6">
+            <label className="block text-gray-500 font-bold md:text-left mb-1 md:mb-0 pr-4">
+              Title:
+            </label>
+          </div>
+          <div className="md:w-5/6">
+            <input
+              className="bg-gray-200 appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500"
+              id="title-input"
+              type="text"
+              value={title}
+              name="title"
+              onChange={({ target }) => setTitle(target.value)}
+            ></input>
+          </div>
         </div>
-        <div>
-          author:
-          <input
-            id="author-input"
-            type="text"
-            value={author}
-            name="author"
-            onChange={({ target }) => setAuthor(target.value)}
-          ></input>
+        <div className="md:flex md:items-center mb-6">
+          <div className="md:w-1/6">
+            <label className="block text-gray-500 font-bold md:text-left mb-1 md:mb-0 pr-4">
+              Author:
+            </label>
+          </div>
+          <div className="md:w-5/6">
+            <input
+              className="bg-gray-200 appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500"
+              id="author-input"
+              type="text"
+              value={author}
+              name="author"
+              onChange={({ target }) => setAuthor(target.value)}
+            ></input>
+          </div>
         </div>
-        <div>
-          url:
-          <input
-            id="url-input"
-            type="text"
-            value={url}
-            name="url"
-            onChange={({ target }) => setUrl(target.value)}
-          ></input>
+        <div className="md:flex md:items-center mb-6">
+          <div className="md:w-1/6">
+            <label className="block text-gray-500 font-bold md:text-left mb-1 md:mb-0 pr-4">
+              Url:
+            </label>
+          </div>
+          <div className="md:w-5/6">
+            <input
+              className="bg-gray-200 appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500"
+              id="url-input"
+              type="text"
+              value={url}
+              name="url"
+              onChange={({ target }) => setUrl(target.value)}
+            ></input>
+          </div>
         </div>
-        <button id="submit-button" type="submit">
-          submit blog
+
+        <button
+          id="submit-button"
+          type="submit"
+          className="px-5 py-2.5 font-medium bg-blue-500 text-blue-50 rounded-lg"
+        >
+          Submit Blog
         </button>
       </form>
     </>

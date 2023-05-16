@@ -10,7 +10,7 @@ const BlogList = ({ blogs, handleSumLikes, handleDelete, user }) => {
   }
 
   return (
-    <div className="container mx-auto mt-4 bg-indigo-300 px-6 py-2 rounded-lg">
+    <div className="container mx-auto my-4 bg-indigo-300 px-6 py-2 rounded-lg">
       <div className="flex flex-col py-2 gap-2">
         <h2 className=" font-medium cursor-default text-xl">Blogs</h2>
         <Togglable buttonLabel="Open Blog Creator">

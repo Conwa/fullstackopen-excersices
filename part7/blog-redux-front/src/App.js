@@ -52,7 +52,7 @@ const App = () => {
   };
 
   return (
-    <div className="bg-lime-100 max-w-full h-full">
+    <div className="bg-lime-100 w-full min-h-screen overflow-x-hidden">
       {user === null ? (
         <LoginView
           handleLogin={handleLogin}

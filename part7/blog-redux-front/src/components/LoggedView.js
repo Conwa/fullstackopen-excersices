@@ -45,20 +45,20 @@ const LoggedView = (props) => {
           <div className="flex flex-row gap-3 items-center">
             {" "}
             <Link to={"/users"}>
-              <a
-                href="#_"
+              <button
+                type="button"
                 className="px-5 py-2.5 font-medium bg-blue-50 hover:bg-blue-100 hover:text-blue-600 rounded-lg text-sm"
               >
                 Users
-              </a>
+              </button>
             </Link>
             <Link to={"/"}>
-              <a
-                href="#_"
+              <button
+                type="button"
                 className="px-5 py-2.5 font-medium bg-blue-50 hover:bg-blue-100 hover:text-blue-600 rounded-lg text-sm"
               >
                 Blogs
-              </a>
+              </button>
             </Link>
           </div>
           <div className="flex flex-row gap-3 items-center">
