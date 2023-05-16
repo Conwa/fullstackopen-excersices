@@ -10,12 +10,14 @@ const BlogList = ({ blogs, handleSumLikes, handleDelete, user }) => {
   }
 
   return (
-    <>
-      <h2>Blogs</h2>
-      <Togglable buttonLabel="Open Blog Creator">
-        {" "}
-        <CreateBlog />
-      </Togglable>
+    <div className="container mx-auto mt-4 bg-indigo-300 px-6 py-2 rounded-lg">
+      <div className="flex flex-col py-2 gap-2">
+        <h2 className=" font-medium cursor-default text-xl">Blogs</h2>
+        <Togglable buttonLabel="Open Blog Creator">
+          <CreateBlog />
+        </Togglable>
+      </div>
+
       {[...blogs]
         .sort((prevBlog, nextBlog) => nextBlog.likes - prevBlog.likes)
         .map((blog) => (
@@ -32,7 +34,7 @@ const BlogList = ({ blogs, handleSumLikes, handleDelete, user }) => {
             </Link>
           </>
         ))}
-    </>
+    </div>
   );
 };
 

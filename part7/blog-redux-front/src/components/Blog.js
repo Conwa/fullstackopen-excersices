@@ -51,7 +51,13 @@ const Blog = ({ handleDelete, handleSumLikes, blog, user }) => {
     return (
       <div style={blogStyle} className="minifiedVersion blog">
         {blog.title} {blog.author}{" "}
-        <button onClick={toggleVisibility}>show details</button>{" "}
+        <button
+          type="button"
+          className="px-5 py-2.5 font-medium bg-blue-50 hover:bg-blue-100 hover:text-blue-600 text-blue-500 rounded-lg text-sm"
+          onClick={toggleVisibility}
+        >
+          Show Details
+        </button>
       </div>
     );
   }

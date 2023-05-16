@@ -31,31 +31,49 @@ const LoggedView = (props) => {
     dispacth(initalizeAuthors());
   }, [dispacth]);
 
-  const style = {
-    backgroundColor: "lightGrey",
-    display: "flex",
-    margin: "0px",
-    gap: "1rem",
-    alignItems: "center",
-  };
-
   return (
-    <>
-      <h2>Blog App</h2>
+    <div className="container max-w-full">
+      <div className="container mx-auto pt-4 flex justify-center">
+        <h2 className="font-bold text-5xl leading-loose text-blue-500 cursor-default">
+          Blog App
+        </h2>
+      </div>
+
       <>
         {" "}
-        <div>
-          {" "}
-          <div style={style}>
-            <Link to={"/users"}>Users</Link>
-            <Link to={"/"}>Blogs</Link>
-            <h3>{props.user.name} logged in</h3>
+        <div className="container mx-auto flex justify-between px-4 py-4 bg-indigo-400 rounded-lg">
+          <div className="flex flex-row gap-3 items-center">
+            {" "}
+            <Link to={"/users"}>
+              <a
+                href="#_"
+                className="px-5 py-2.5 font-medium bg-blue-50 hover:bg-blue-100 hover:text-blue-600 rounded-lg text-sm"
+              >
+                Users
+              </a>
+            </Link>
+            <Link to={"/"}>
+              <a
+                href="#_"
+                className="px-5 py-2.5 font-medium bg-blue-50 hover:bg-blue-100 hover:text-blue-600 rounded-lg text-sm"
+              >
+                Blogs
+              </a>
+            </Link>
+          </div>
+          <div className="flex flex-row gap-3 items-center">
+            {" "}
+            <h3 className="px-5 py-2.5 font-medium bg-blue-500  text-blue-50 rounded-lg text-sm cursor-default">
+              {props.user.name} logged in
+            </h3>
             <button
+              type="button"
+              className="px-5 py-2.5 font-medium bg-blue-50 hover:bg-blue-100 hover:text-blue-600 rounded-lg text-sm"
               onClick={() => {
                 dispacth(exitLogin());
               }}
             >
-              log out
+              Log Out
             </button>
           </div>
         </div>
@@ -86,7 +104,7 @@ const LoggedView = (props) => {
           />
         </Routes>
       </>
-    </>
+    </div>
   );
 };
 
