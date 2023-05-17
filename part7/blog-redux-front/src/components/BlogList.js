@@ -16,7 +16,7 @@ const BlogList = ({ blogs, handleSumLikes, handleDelete, user }) => {
         </Togglable>
       </div>
 
-      <div className="grid grid-cols-3 grid-rows-4 gap-4">
+      <div className="grid grid-cols-3 py-4 grid-rows-4 gap-6">
         {[...blogs]
           .sort((prevBlog, nextBlog) => nextBlog.likes - prevBlog.likes)
           .map((blog) => (

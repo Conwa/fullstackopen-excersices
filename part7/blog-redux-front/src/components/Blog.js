@@ -43,7 +43,7 @@ const Blog = ({ handleDelete, handleSumLikes, blog, user }) => {
 
   if (detailed === false) {
     return (
-      <div className="minifiedVersion blog px-4 flex flex-row justify-between items-center py-2.5 font-medium bg-blue-50  rounded-lg text-sm my-4 w-full">
+      <div className="minifiedVersion blog px-4 flex flex-row justify-between items-center py-2.5 font-medium bg-blue-50  rounded-lg text-sm  w-full h-fit">
         <Link to={`/blogs/${blog.id}`}>
           <div className="flex flex-col">
             {" "}
@@ -63,7 +63,7 @@ const Blog = ({ handleDelete, handleSumLikes, blog, user }) => {
     );
   }
   return (
-    <div className="maxifiedVersion blog px-4 flex flex-row justify-between items-center py-2.5 font-medium bg-blue-50  rounded-lg text-sm my-4 w-full">
+    <div className="maxifiedVersion blog px-4 flex flex-row justify-between items-center py-2.5 font-medium bg-blue-50  rounded-lg text-sm  w-full">
       <div className="cursor-default">
         <p>Title: {blog.title}</p>
         <p>Author: {blog.author}</p>
