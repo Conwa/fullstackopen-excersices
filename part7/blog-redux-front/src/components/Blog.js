@@ -82,7 +82,15 @@ const Blog = ({ handleDelete, handleSumLikes, blog, user }) => {
         <p>Url: {blog.url}</p>
 
         <div>
-          {isOwner && <button onClick={deleteBlog}>remove blog</button>}
+          {isOwner && (
+            <button
+              type="button"
+              className="px-2  font-medium bg-blue-500 hover:bg-blue-100 hover:text-blue-600 text-blue-50 rounded-lg text-sm"
+              onClick={deleteBlog}
+            >
+              remove blog
+            </button>
+          )}
         </div>
       </div>
 
