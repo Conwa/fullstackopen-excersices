@@ -1,6 +1,8 @@
 import PropTypes from "prop-types";
 import { useEffect, useState } from "react";
 
+import { Link } from "react-router-dom";
+// eslint-disable-next-line react/display-name
 const Blog = ({ handleDelete, handleSumLikes, blog, user }) => {
   Blog.propTypes = {
     handleDelete: PropTypes.func.isRequired,
@@ -35,25 +37,24 @@ const Blog = ({ handleDelete, handleSumLikes, blog, user }) => {
     handleDelete(blog);
   };
 
-  const blogStyle = {
-    paddingTop: 10,
-    paddingLeft: 2,
-    border: "solid",
-    borderWidth: 1,
-    marginBottom: 5,
-  };
-
   if (blog === null) {
     return null;
   }
 
   if (detailed === false) {
     return (
-      <div style={blogStyle} className="minifiedVersion blog">
-        {blog.title} {blog.author}{" "}
+      <div className="minifiedVersion blog px-4 flex flex-row justify-between items-center py-2.5 font-medium bg-blue-50  rounded-lg text-sm my-4 w-full">
+        <Link to={`/blogs/${blog.id}`}>
+          <div className="flex flex-col">
+            {" "}
+            <p>{blog.title}</p>
+            <p className="underline decoration-solid"> {blog.author}</p>
+          </div>
+        </Link>
+
         <button
           type="button"
-          className="px-5 py-2.5 font-medium bg-blue-50 hover:bg-blue-100 hover:text-blue-600 text-blue-500 rounded-lg text-sm"
+          className="px-5 py-2.5 font-medium bg-blue-500 hover:bg-blue-100 hover:text-blue-600 text-blue-50 rounded-lg text-sm"
           onClick={toggleVisibility}
         >
           Show Details
@@ -62,17 +63,36 @@ const Blog = ({ handleDelete, handleSumLikes, blog, user }) => {
     );
   }
   return (
-    <div style={blogStyle} className="maxifiedVersion blog">
-      <div>
-        Title: {blog.title} <button onClick={toggleVisibility}>minimize</button>
+    <div className="maxifiedVersion blog px-4 flex flex-row justify-between items-center py-2.5 font-medium bg-blue-50  rounded-lg text-sm my-4 w-full">
+      <div className="cursor-default">
+        <p>Title: {blog.title}</p>
+        <p>Author: {blog.author}</p>
+
+        <div className="flex flex-row gap-2">
+          <p> Likes: {blog.likes}</p>
+
+          <button
+            type="button"
+            className="px-2  font-medium bg-blue-500 hover:bg-blue-100 hover:text-blue-600 text-blue-50 rounded-lg text-sm"
+            onClick={handleLikes}
+          >
+            Increase likes
+          </button>
+        </div>
+        <p>Url: {blog.url}</p>
+
+        <div>
+          {isOwner && <button onClick={deleteBlog}>remove blog</button>}
+        </div>
       </div>
-      <div>Author: {blog.author}</div>
-      <div>
-        Likes: {blog.likes}
-        <button onClick={handleLikes}>increase likes</button>
-      </div>
-      <div>Url: {blog.url}</div>
-      <div>{isOwner && <button onClick={deleteBlog}>remove blog</button>}</div>
+
+      <button
+        type="button"
+        className="px-5 py-2.5 font-medium bg-blue-500 hover:bg-blue-100 hover:text-blue-600 text-blue-50 rounded-lg text-sm"
+        onClick={toggleVisibility}
+      >
+        minimize
+      </button>
     </div>
   );
 };

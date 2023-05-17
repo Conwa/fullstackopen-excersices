@@ -2,8 +2,6 @@ import Blog from "./Blog";
 import CreateBlog from "./CreateBlog";
 import Togglable from "./Togglable";
 
-import { Link } from "react-router-dom";
-
 const BlogList = ({ blogs, handleSumLikes, handleDelete, user }) => {
   if (blogs === undefined || blogs.lenght === 0) {
     return null;
@@ -18,12 +16,12 @@ const BlogList = ({ blogs, handleSumLikes, handleDelete, user }) => {
         </Togglable>
       </div>
 
-      {[...blogs]
-        .sort((prevBlog, nextBlog) => nextBlog.likes - prevBlog.likes)
-        .map((blog) => (
-          <>
-            <Link to={`/blogs/${blog.id}`}>
-              {" "}
+      <div className="grid grid-cols-3 grid-rows-4 gap-4">
+        {[...blogs]
+          .sort((prevBlog, nextBlog) => nextBlog.likes - prevBlog.likes)
+          .map((blog) => (
+            // eslint-disable-next-line react/jsx-key
+            <div className="flex flex-row">
               <Blog
                 key={blog.id}
                 blog={blog}
@@ -31,9 +29,9 @@ const BlogList = ({ blogs, handleSumLikes, handleDelete, user }) => {
                 handleDelete={handleDelete}
                 user={user}
               />
-            </Link>
-          </>
-        ))}
+            </div>
+          ))}
+      </div>
     </div>
   );
 };
