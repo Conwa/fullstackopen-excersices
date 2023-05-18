@@ -20,10 +20,11 @@ const App = () => {
 
   useEffect(() => {
     const loggedUserJSON = window.localStorage.getItem("loggedUser");
+    console.log(loggedUserJSON);
 
-    const user = JSON.parse(loggedUserJSON);
+    const localStorageUser = JSON.parse(loggedUserJSON);
 
-    provideUser(user);
+    provideUser(localStorageUser);
     dispacth(isUserLoged());
   }, [dispacth]);
 
