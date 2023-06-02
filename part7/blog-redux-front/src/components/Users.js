@@ -5,45 +5,33 @@ import { Link } from "react-router-dom";
 const Users = () => {
   const authors = useSelector((state) => state.authors);
 
-  const boxStyle = {
-    display: "flex",
-    flexDirection: "column",
-    maxWidth: "15%",
-    border: "2px dotted black",
-    marginTop: ".5rem",
-    marginBottom: "1rem",
-  };
-
-  const authorDivStyle = {
-    display: "flex",
-    gap: ".5rem",
-    justifyContent: "space-between",
-  };
-
-  const authorStyle = {
-    color: "inherit",
-  };
-
   return (
-    <>
-      <h2>Users</h2>
-      <div style={boxStyle}>
-        <div style={authorDivStyle}>
-          <p style={{ fontWeight: "bold" }}>User</p>
-          <p style={{ fontWeight: "bold" }}>Blogs Created</p>
-        </div>
+    <div className="container mx-auto my-4 bg-indigo-300 px-6 py-2 rounded-lg">
+      <div className="flex flex-col py-2 gap-2">
+        <h2 className=" font-medium cursor-default text-xl">Users Profiles</h2>
 
-        {authors.map((author) => (
-          <div key={author.id} style={authorDivStyle}>
-            <Link style={authorStyle} to={`/users/${author.id}`}>
-              {" "}
-              <p>{author.username.toUpperCase()}:</p>
-            </Link>
-            <p style={{ fontWeight: "bold" }}> {author.blogs.length}</p>
-          </div>
-        ))}
+        <table className="table-auto py-2.5 font-medium bg-blue-50  rounded-lg text-base w-1/3  max-w-sm">
+          <thead className="border-b-2 border-b-gray-500 divide-x-2 divide-stone-950">
+            <tr>
+              <th className="w-1/2">User</th>
+              <th className="w-1/2">Blogs Created</th>
+            </tr>
+          </thead>
+          <tbody>
+            {authors.map((author) => (
+              <tr key={author.id}>
+                <td className="w-1/2 text-center">
+                  <Link to={`/users/${author.id}`} className="w-1/2">
+                    {author.username.toUpperCase()}
+                  </Link>
+                </td>
+                <td className="w-1/2 text-center">{author.blogs.length}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
       </div>
-    </>
+    </div>
   );
 };
 

@@ -13,20 +13,19 @@ const App = () => {
   const [password, setPassword] = useState("");
   const [user, provideUser] = useState(null);
 
-  const dispacth = useDispatch();
+  const dispatch = useDispatch();
   const authors = useSelector((state) => state.authors);
 
   const reduxStoreUser = useSelector((state) => state.userInfo);
 
   useEffect(() => {
     const loggedUserJSON = window.localStorage.getItem("loggedUser");
-    console.log(loggedUserJSON);
 
     const localStorageUser = JSON.parse(loggedUserJSON);
 
     provideUser(localStorageUser);
-    dispacth(isUserLoged());
-  }, [dispacth]);
+    dispatch(isUserLoged());
+  }, [dispatch]);
 
   useEffect(() => {
     provideUser(reduxStoreUser);
@@ -34,21 +33,21 @@ const App = () => {
 
   const handleLogin = (event) => {
     event.preventDefault();
-    dispacth(testLogin(username, password));
+    dispatch(testLogin(username, password));
 
     setUsername("");
     setPassword("");
   };
 
   const handleSumLikes = (blogObject) => {
-    dispacth(voteForBlog(blogObject));
+    dispatch(voteForBlog(blogObject));
   };
 
   const handleDelete = (blogObject) => {
     const message = `Delete ${blogObject.title} by ${blogObject.author}?`;
 
     if (window.confirm(message)) {
-      dispacth(deleteTargetBlog(blogObject));
+      dispatch(deleteTargetBlog(blogObject));
     }
   };
 

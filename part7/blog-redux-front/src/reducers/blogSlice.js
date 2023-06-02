@@ -59,7 +59,7 @@ export const deleteTargetBlog = (blog) => {
 export const commentBlog = (id, comment) => {
   return async (dispatch) => {
     const data = await blogService.comment(id, comment);
-    // dispatch(updateBlog(data));
+    dispatch(updateBlog(data));
   };
 };
 
