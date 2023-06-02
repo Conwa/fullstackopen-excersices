@@ -20,6 +20,7 @@ const LoginView = (props) => (
             type="text"
             value={props.username}
             name="Username"
+            placeholder="root"
             onChange={({ target }) => props.setUsername(target.value)}
           ></input>
         </div>
@@ -37,6 +38,7 @@ const LoginView = (props) => (
             type="password"
             value={props.password}
             name="Password"
+            placeholder="12345"
             onChange={({ target }) => props.setPassword(target.value)}
           ></input>
         </div>
