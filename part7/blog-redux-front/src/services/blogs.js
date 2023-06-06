@@ -1,6 +1,11 @@
 /* eslint-disable no-unused-vars */
 import axios from "axios";
+
+//NEED TO CHANGE URL FOR WORKING ON VERCEL OR FOR WORKING ON PRIVATE COMPUTER
+
 const baseUrl = "/api/blogs";
+
+const urlForVercel = "https://blog-redux-back-two.vercel.app/api/blogs";
 
 let token = null;
 
@@ -9,7 +14,7 @@ const setToken = (newToken) => {
 };
 
 const getAll = () => {
-  const request = axios.get(baseUrl);
+  const request = axios.get(urlForVercel);
   return request.then((response) => response.data);
 };
 
@@ -18,14 +23,14 @@ const create = async (newObject) => {
     headers: { Authorization: token },
   };
 
-  const response = await axios.post(baseUrl, newObject, config);
+  const response = await axios.post(urlForVercel, newObject, config);
   return response.data;
 };
 
 const update = (objectToUpdate) => {
   const id = objectToUpdate.id;
 
-  const blogURl = baseUrl.concat("/").concat(id);
+  const blogURl = urlForVercel.concat("/").concat(id);
 
   const request = axios.put(blogURl, objectToUpdate);
 
@@ -37,7 +42,7 @@ const deletion = async (objectToDelete) => {
     headers: { Authorization: token },
   };
 
-  const request = axios.delete(`${baseUrl}/${objectToDelete.id}`, config);
+  const request = axios.delete(`${urlForVercel}/${objectToDelete.id}`, config);
   return request.then((response) => response.data);
 };
 
@@ -52,7 +57,7 @@ const comment = async (id, comment) => {
   //   config
   // );
   const request = await axios.post(
-    `${baseUrl}/${id}/comments`,
+    `${urlForVercel}/${id}/comments`,
     { comment },
     config
   );
