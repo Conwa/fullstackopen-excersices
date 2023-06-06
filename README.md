@@ -37,6 +37,8 @@ https://young-resonance-3011.fly.dev/
 Blog App:
 https://fullstackopen-excersices-git-main-conwa.vercel.app/
 
+https://blog-redux-back-two.vercel.app/
+
 
 - React
 - Axios
